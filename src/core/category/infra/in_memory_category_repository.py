@@ -14,3 +14,9 @@ class InMemoryCategoryRepository(CategoryRepositoryInterface):
             if c.id == id:
                 return c
         return None
+
+    def delete_by_id(self, id) -> None:
+        for n, i in enumerate(self.categories):
+            if i.id == id:
+                self.categories.pop(n)
+            
