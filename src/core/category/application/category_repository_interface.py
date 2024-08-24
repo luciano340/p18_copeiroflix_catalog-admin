@@ -13,3 +13,6 @@ class CategoryRepositoryInterface(ABC):
 
     def delete_by_id(self,id) -> None:
         raise NotImplementedError
+
+    def update(self, category: Category) -> None:
+        raise NotImplementedError
