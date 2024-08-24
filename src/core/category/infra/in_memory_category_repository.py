@@ -24,3 +24,6 @@ class InMemoryCategoryRepository(CategoryRepositoryInterface):
         for n, i in enumerate(self.categories):
             if i.id == category.id:
                 self.categories[n] = category
+
+    def list(self) -> list[Category]:
+        return [c for c in self.categories]
