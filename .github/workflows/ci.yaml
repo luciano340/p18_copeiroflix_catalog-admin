@@ -37,3 +37,6 @@ jobs:
       
       - name: Run test on core infra
         run: pytest src/core/category/tests/infra/
+      
+      - name: Run test on django apps
+        run: pytest src/django_project/apps/category/tests
