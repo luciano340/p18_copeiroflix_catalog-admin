@@ -27,7 +27,7 @@ jobs:
         run: python -m pip install pytest
       
       - name: Check info
-        run: ls -R ; pwd; echo $GITHUB_PATH
+        run: echo $GITHUB_ENV
 
       - name: Configure Path
         run: echo "./" >> $GITHUB_PATH
