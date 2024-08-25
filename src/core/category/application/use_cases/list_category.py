@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from uuid import UUID
-from src.core.category.application.category_repository_interface import CategoryRepositoryInterface
+from datetime import date, datetime
+from src.core.category.domain.category_repository_interface import CategoryRepositoryInterface
 from src.core.category.domain.category import Category
 
 @dataclass
@@ -13,6 +14,8 @@ class CategoryOutput:
     name: str
     description: str
     is_active: bool
+    created_date: datetime
+    updated_date: datetime
 
 @dataclass
 class ListCategoryResponse:
@@ -33,6 +36,8 @@ class ListCategory:
                     name=category.name,
                     description=category.description,
                     is_active=category.is_active,
+                    created_date=category.created_date,
+                    updated_date=category.updated_date
                 )
                 for category in categories
             ]

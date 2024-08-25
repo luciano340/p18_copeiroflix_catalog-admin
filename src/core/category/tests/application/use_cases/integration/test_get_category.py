@@ -34,7 +34,9 @@ class TestGetCategory:
             id=c.id,
             name=c.name,
             description=c.description,
-            is_active=c.is_active
+            is_active=c.is_active,
+            created_date=c.created_date,
+            updated_date=c.updated_date
         )
     
     def test_when_category_not_exists(self):
