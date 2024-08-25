@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from datetime import datetime
 import uuid
 
 @dataclass
@@ -6,6 +7,8 @@ class Category:
     name: str
     description: str = ""
     is_active: bool = True
+    created_date: datetime = datetime.now().isoformat(sep=" ", timespec="seconds")
+    updated_date: datetime = None
     id:  uuid.UUID = field(default_factory=uuid.uuid4)
 
     def __post_init__(self):
@@ -26,14 +29,17 @@ class Category:
     def update_category(self, name: str = "", description: str = "") -> None:
         self.name = name
         self.description = description
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
         self.__validation()
     
     def activate(self) -> None:
         self.is_active = True
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
         self.__validation()
 
     def deactivate(self) -> None:
         self.is_active = False
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
         self.__validation()
 
     def __validation(self):
