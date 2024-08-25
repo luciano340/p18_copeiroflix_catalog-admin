@@ -12,25 +12,25 @@ jobs:
         python-versions:
           - "3.12.3"
   
-  name: PyTest check
-  runs-on: ${{ matrix.os }}
-  steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+    name: PyTest check
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ matrix.python-versions }}
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-versions }}
 
-    - name: Install dependencies
-      run: python -m pip install pytest .
-    
-    - name: Run test on core application
-      run: pytest src/core/category/tests/application/
+      - name: Install dependencies
+        run: python -m pip install pytest .
+      
+      - name: Run test on core application
+        run: pytest src/core/category/tests/application/
 
-    - name: Run test on core domain
-      run: pytest src/core/category/tests/domain/
-    
-    - name: Run test on core infra
-      run: pytest src/core/category/tests/infra/
+      - name: Run test on core domain
+        run: pytest src/core/category/tests/domain/
+      
+      - name: Run test on core infra
+        run: pytest src/core/category/tests/infra/
