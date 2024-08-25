@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ matrix.python-versions }}
 
       - name: Install dependencies
-        run: python -m pip install pytest
+        run: python -m pip install pytest==8.3.2 pytest-django
       
       - name: Configure Path
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
