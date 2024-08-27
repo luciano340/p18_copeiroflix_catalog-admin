@@ -23,7 +23,7 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
             return Category(
                 id=category_orm.id,
                 name=category_orm.name,
-                descrription=category_orm.descripton,
+                description=category_orm.description,
                 is_active=category_orm.is_active
             )
         except self.category_model.DoesNotExist:
