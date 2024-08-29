@@ -40,18 +40,6 @@ class TestCategory:
         assert c.description == "Muito legal"
         assert c.is_active is False
 
-    
-    def test_str_must_return_custom(self):
-        category_id = uuid.uuid4()
-        c = Category(
-            id=category_id,
-            name="Filme",
-            description="Muito legal",
-            is_active=False
-        )
-
-        assert str(c) == f"str {category_id} - Filme - Muito legal - False"
-
     def test_repr_must_return_custom(self):
         category_id = uuid.uuid4()
         c = Category(

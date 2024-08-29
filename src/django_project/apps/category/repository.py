@@ -23,7 +23,9 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
                 id=category_orm.id,
                 name=category_orm.name,
                 description=category_orm.description,
-                is_active=category_orm.is_active
+                is_active=category_orm.is_active,
+                created_date=category_orm.created_date,
+                updated_date=category_orm.updated_date
             )
         except self.category_model.DoesNotExist:
             return None

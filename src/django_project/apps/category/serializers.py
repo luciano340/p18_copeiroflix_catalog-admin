@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 class CategoryResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
-    name = serializers.CharField(max_length=255)
+    name = serializers.CharField(max_length=255, allow_blank=False)
     description = serializers.CharField(max_length=1024)
     is_active   = serializers.BooleanField(default=True)
     created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
@@ -20,9 +20,15 @@ class RetrieveCategoryRequestSerializer(serializers.Serializer):
 
 
 class CreateCategoryRequestSerializer(serializers.Serializer):
-    name = serializers.CharField(max_length=255)
+    name = serializers.CharField(max_length=255, allow_blank=False)
     description = serializers.CharField(max_length=1024)
     is_active   = serializers.BooleanField(default=True)
 
 class CreateCategoryResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
+
+class UpdateCategorySerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    name = serializers.CharField(max_length=255, allow_blank=False)
+    description = serializers.CharField(max_length=1024)
+    is_active   = serializers.BooleanField()

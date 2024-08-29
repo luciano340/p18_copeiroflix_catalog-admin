@@ -133,7 +133,7 @@ class TestCreateCategory:
             }
         )
 
-        assert response.statuus_code == status.HTTP_201_CREATED
+        assert response.status_code == status.HTTP_201_CREATED
         assert category_repository.list() == [
             Category(
                 id=uuid.UUID(response.data["id"]),
@@ -141,3 +141,55 @@ class TestCreateCategory:
                 description="Teste"
             )
         ]
+
+@pytest.mark.django_db
+class TestUpdateAPI:
+    def test_when_payload_is_invalid(self) -> None:
+        url = "/api/categories/8383783749/"
+        response = APIClient().put(
+            url,
+            data={
+                "name": "",
+                "description": "oi"
+            },
+            format="json"
+        )
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+    
+    def test_when_payload_is_valid(
+            self, 
+            category_repository: DjangoORMCategoryRepository,
+            category_documentary: Category
+        ) -> None:
+
+        category_repository.save(category_documentary)
+
+        url = f"/api/categories/{category_documentary.id}/"
+        response = APIClient().put(
+            url,
+            data={
+                "name": "Luciano",
+                "description": "oi",
+                "is_active": "False"
+            },
+            format="json"
+        )
+
+        print(response.data)
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+
+    def test_when_category_does_not_exist(self):
+        url = f"/api/categories/{uuid.uuid4()}/"
+
+        response = APIClient().put(
+            url,
+            data={
+                "name": "Luciano",
+                "description": "oi",
+                "is_active": "False"
+            },
+            format="json"
+        )
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND

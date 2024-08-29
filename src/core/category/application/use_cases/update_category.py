@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from uuid import UUID
 from src.core.category.domain.category_repository_interface import CategoryRepositoryInterface
 from src.core.category.application.use_cases.exceptions import CategoryNotFound
@@ -9,7 +10,7 @@ class UpdateCategoryRequest:
     name: str | None = None
     description: str | None = None
     is_active: bool | None = None
-
+    
 class UpdateCategory:
     def __init__(self, repository: CategoryRepositoryInterface):
         self.repository = repository
@@ -18,7 +19,7 @@ class UpdateCategory:
         category = self.repository.get_by_id(request.id)
         
         if category is None:
-            raise CategoryNotFound(f"Category with id {request.id} not found for remove")
+            raise CategoryNotFound(f"Category with id {request.id} not found for update")
 
         current_name = category.name
         current_description = category.description
@@ -35,6 +36,6 @@ class UpdateCategory:
             else:
                 category.deactivate()
 
-        category.update_category(name=current_name, description=current_description)  
+        category.update_category(name=current_name, description=current_description)
         self.repository.update(category)
          
