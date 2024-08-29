@@ -1,3 +1,4 @@
+from urllib import response
 from uuid import UUID
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -8,6 +9,7 @@ from src.core.category.application.use_cases.exceptions import CategoryNotFound
 from src.core.category.application.use_cases.get_category import GetCategory, GetCategoryRequest
 from src.core.category.application.use_cases.list_category import ListCategory, ListCategoryRequest
 from django_project.apps.category.repository import DjangoORMCategoryRepository
+from src.django_project.apps.category.serializers import CategoryResponseSerializer, ListCategoryResponseSerializer, RetrieveCategoryRequestSerializer
 
 
 class CategoryViewSet(viewsets.ViewSet):
@@ -16,47 +18,27 @@ class CategoryViewSet(viewsets.ViewSet):
         use_case = ListCategory(repository=DjangoORMCategoryRepository())
         output = use_case.execute(input)
         
-        categories = [
-            {
-                "id": str(category.id),
-                "name": category.name,
-                "description": category.description,
-                "is_active": category.is_active,
-                "created_date": category.created_date.strftime('%Y-%m-%d %H:%M:%S'),
-                "updated_date": category.updated_date if not category.updated_date else category.updated_date.strftime('%Y-%m-%d %H:%M:%S')
-            }
-            for category in output.data
-        ]
+        serializer = ListCategoryResponseSerializer(instance=output)
 
         return Response(
             status=HTTP_200_OK,
-            data=categories
+            data=serializer.data
         )
 
     def retrieve(self, request: Request, pk=None):
-        try:
-            category_pk = UUID(pk)
-        except ValueError:
-            return Response(status=HTTP_400_BAD_REQUEST)
+        serializer = RetrieveCategoryRequestSerializer(data={"id": pk})
+        serializer.is_valid(raise_exception=True)
         
         use_case = GetCategory(repository=DjangoORMCategoryRepository())
-        request_dto = GetCategoryRequest(id=category_pk)
+        request_dto = GetCategoryRequest(id=serializer.validated_data["id"])
 
         try:
             response_dto = use_case.execute(request=request_dto)
         except CategoryNotFound:
             return Response(status=HTTP_404_NOT_FOUND)
 
-        category_output = {
-            "id": str(response_dto.id),
-            "name": response_dto.name,
-            "description": response_dto.description,
-            "is_active": response_dto.is_active,
-            "created_date": response_dto.created_date,
-            "updated_date": response_dto.updated_date
-        }
-
+        category_output = CategoryResponseSerializer(instance=response_dto)
         return Response(
             status=HTTP_200_OK,
-            data=category_output
+            data=category_output.data
         )
