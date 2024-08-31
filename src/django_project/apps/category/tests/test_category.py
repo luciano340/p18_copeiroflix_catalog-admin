@@ -1,9 +1,9 @@
-from unicodedata import category
 import uuid
 from rest_framework.test import APIClient
 import pytest
 from rest_framework import status
 from django_project.apps.category.repository import DjangoORMCategoryRepository
+from freezegun import freeze_time
 from src.core.category.domain.category import Category
 
 @pytest.fixture
@@ -23,6 +23,7 @@ def category_documentary():
 @pytest.fixture
 def category_repository() -> DjangoORMCategoryRepository:
     return DjangoORMCategoryRepository()
+
 
 @pytest.mark.django_db
 class TestListAPI:
@@ -176,7 +177,6 @@ class TestUpdateAPI:
             format="json"
         )
 
-        print(response.data)
         assert response.status_code == status.HTTP_204_NO_CONTENT
 
     def test_when_category_does_not_exist(self):
@@ -221,3 +221,64 @@ class TestDeleteAPI:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert category_repository.list() == []
+
+@pytest.mark.django_db
+class TestUpdatePartialAPI:
+    def test_when_payload_is_invalid(self) -> None:
+        url = f"/api/categories/{uuid.uuid4()}/"
+        response = APIClient().patch(
+            url,
+            data={
+                "name": "",
+                "description": "oi"
+            },
+            format="json"
+        )
+
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+    
+    def test_when_payload_is_valid(
+            self, 
+            category_repository: DjangoORMCategoryRepository,
+            category_documentary: Category
+        ) -> None:
+
+        category_repository.save(category_documentary)
+
+        url = f"/api/categories/{category_documentary.id}/"
+        with freeze_time("2024-09-01 03:03:03"):
+            response = APIClient().patch(
+                url,
+                data={
+                    "description": "oi",
+                },
+                format="json"
+            )
+
+        edited_category = category_repository.list()[0]
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert edited_category == Category(
+            id=category_documentary.id,
+            name=category_documentary.name,
+            description="oi",
+            is_active=category_documentary.is_active,
+            created_date=category_documentary.created_date,
+            updated_date="2024-09-01 03:03:03"
+        )
+
+
+    def test_when_category_does_not_exist(self):
+        url = f"/api/categories/{uuid.uuid4()}/"
+
+        response = APIClient().patch(
+            url,
+            data={
+                "name": "Luciano",
+                "description": "oi",
+                "is_active": "False"
+            },
+            format="json"
+        )
+
+        assert response.status_code == status.HTTP_404_NOT_FOUND

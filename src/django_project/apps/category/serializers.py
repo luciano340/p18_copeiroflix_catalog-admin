@@ -18,7 +18,6 @@ class RetrieveCategoryResponseSerializer(serializers.Serializer):
 class RetrieveCategoryRequestSerializer(serializers.Serializer):
     id = serializers.UUIDField()
 
-
 class CreateCategoryRequestSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255, allow_blank=False)
     description = serializers.CharField(max_length=1024)
@@ -32,6 +31,12 @@ class UpdateCategorySerializer(serializers.Serializer):
     name = serializers.CharField(max_length=255, allow_blank=False)
     description = serializers.CharField(max_length=1024)
     is_active   = serializers.BooleanField()
+
+class PutCategorySerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    name = serializers.CharField(max_length=255, required=False)
+    description = serializers.CharField(max_length=1024, required=False)
+    is_active   = serializers.BooleanField(required=False)
 
 class DeleteCategoryRequestSerializer(serializers.Serializer):
     id = serializers.UUIDField()
