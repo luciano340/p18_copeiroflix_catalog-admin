@@ -15,7 +15,7 @@ class Category:
         self.__validation()
 
     def __str__(self) -> str:
-        return f"str {self.id} - {self.name} - {self.description} - {self.is_active}"
+        return f"str {self.id} - {self.name} - {self.description} - {self.is_active} - {self.created_date} - {self.updated_date}"
 
     def __repr__(self) -> str:
         return f"repr {self.id} - {self.name} - {self.description} - {self.is_active}"

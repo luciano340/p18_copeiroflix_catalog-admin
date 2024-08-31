@@ -14,7 +14,6 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
             description=category.description,
             is_active=category.is_active,
             created_date=category.created_date
-            
         )
     
     def get_by_id(self, id: UUID) -> Category | None:
@@ -23,8 +22,10 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
             return Category(
                 id=category_orm.id,
                 name=category_orm.name,
-                descrription=category_orm.descripton,
-                is_active=category_orm.is_active
+                description=category_orm.description,
+                is_active=category_orm.is_active,
+                created_date=category_orm.created_date,
+                updated_date=category_orm.updated_date
             )
         except self.category_model.DoesNotExist:
             return None
