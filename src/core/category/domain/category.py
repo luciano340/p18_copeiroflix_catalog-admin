@@ -7,7 +7,7 @@ class Category:
     name: str
     description: str = ""
     is_active: bool = True
-    created_date: datetime = datetime.now().isoformat(sep=" ", timespec="seconds")
+    created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
     id:  uuid.UUID = field(default_factory=uuid.uuid4)
 
