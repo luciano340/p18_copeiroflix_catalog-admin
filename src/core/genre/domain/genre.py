@@ -53,7 +53,7 @@ class Genre:
     
         if len(self.categories) > 0:
             try:
-                UUID(list(self.categories)[-1])
+                UUID(str(list(self.categories)[-1]))
             except:
                 raise ValueError("Not a valid UUID")
         

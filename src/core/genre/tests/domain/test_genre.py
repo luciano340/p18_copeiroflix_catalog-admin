@@ -56,7 +56,7 @@ class TestUpdategenre:
     def test_add_category(self):
         c = Genre(name="Filme")
 
-        c.add_caterogy(category_id=uuid.uuid4)
+        c.add_caterogy(category_id=uuid.uuid4())
 
         assert len(c.categories) == 1
 
