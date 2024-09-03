@@ -52,8 +52,9 @@ class Genre:
             raise ValueError("name cannot be empty")
     
         if len(self.categories) > 0:
+            uuid_to_str = str(list(self.categories)[-1])
             try:
-                UUID(str(list(self.categories)[-1]))
+                UUID(uuid_to_str)
             except:
-                raise ValueError("Not a valid UUID")
+                raise ValueError(f"Not a valid UUID: {uuid_to_str}")
         
