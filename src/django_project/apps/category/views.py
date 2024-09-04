@@ -8,7 +8,7 @@ from src.core.category.application.use_cases.delete_category import DeleteCatego
 from src.core.category.application.use_cases.exceptions import CategoryNotFound
 from src.core.category.application.use_cases.get_category import GetCategory, GetCategoryRequest
 from src.core.category.application.use_cases.list_category import ListCategory, ListCategoryRequest
-from django_project.apps.category.repository import DjangoORMCategoryRepository
+from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.core.category.application.use_cases.update_category import UpdateCategory, UpdateCategoryRequest
 from src.django_project.apps.category import repository
 from src.django_project.apps.category import serializers

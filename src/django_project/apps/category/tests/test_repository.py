@@ -1,7 +1,7 @@
 import pytest
 from src.core.category.domain.category import Category
-from django_project.apps.category.repository import DjangoORMCategoryRepository
-from django_project.apps.category.models import Category as CategoryModel
+from src.django_project.apps.category.repository import DjangoORMCategoryRepository
+from src.django_project.apps.category.models import Category as CategoryModel
 
 @pytest.mark.django_db
 class TestRepository:

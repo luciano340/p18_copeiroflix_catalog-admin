@@ -2,7 +2,7 @@ import uuid
 from rest_framework.test import APIClient
 import pytest
 from rest_framework import status
-from django_project.apps.category.repository import DjangoORMCategoryRepository
+from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from freezegun import freeze_time
 from src.core.category.domain.category import Category
 
