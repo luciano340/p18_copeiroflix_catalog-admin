@@ -22,7 +22,7 @@ class TestCreateGenre:
         output = use_case.execute(
             CreateGenreRequest(
                 name="Genre 1",
-                categories_ids={cat.id for cat in category_repository.list()},
+                categories_id={cat.id for cat in category_repository.list()},
             )
         )
 
@@ -45,7 +45,7 @@ class TestCreateGenre:
             use_case.execute(
                 CreateGenreRequest(
                     name="Genre 1",
-                    categories_ids={uuid.uuid4()}
+                    categories_id={uuid.uuid4()}
                 )
             )
 

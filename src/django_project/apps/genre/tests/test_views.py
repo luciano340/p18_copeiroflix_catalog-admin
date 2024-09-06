@@ -1,4 +1,5 @@
 
+from freezegun import freeze_time
 from rest_framework.test import APIClient
 from rest_framework import status
 import pytest
@@ -80,3 +81,58 @@ class TestListAPI:
         assert response.data["data"][1]["name"] == genre_drama.name
         assert response.data["data"][1]["is_active"] == genre_drama.is_active
         assert response.data["data"][1]["categories_id"] == []
+    
+
+@pytest.mark.django_db
+class TestCreateAPI:
+    def test_create_genre_with_categories(
+            self,
+            genre_repository: DjangoORMGenreRepository,
+            category_repository,
+            category_movie,
+            category_doc
+    ):
+        repo_category = category_repository
+        print(repo_category.list())
+
+        url = "/api/genres/"
+
+        with freeze_time("2024-09-06 07:24:00"):
+            response = APIClient().post(
+                url,
+                data={
+                    "name": "Terror",
+                    "is_active": "True",
+                    "categories_id": [
+                        f"{category_movie.id}",
+                        f"{category_doc.id}"
+                    ]
+                }
+            )
+
+        print(response.data)
+        assert response.status_code == status.HTTP_201_CREATED
+        assert response.data["id"]
+        assert len(genre_repository.list()) == 1
+        genre_from_repository = genre_repository.get_by_id(id=response.data["id"])
+        assert str(genre_from_repository.id) == response.data["id"]
+        assert genre_from_repository.name == "Terror"
+        assert genre_from_repository.is_active == True
+        assert genre_from_repository.categories == {category_movie.id, category_doc.id}
+        assert str(genre_from_repository.created_date) == "2024-09-06 07:24:00+00:00"
+        assert genre_from_repository.updated_date == None
+    
+@pytest.mark.django_db
+class TestDelteAPI:
+    def test_delete_genre(
+            self,
+            genre_repository: DjangoORMGenreRepository,
+            genre_drama
+    ):
+        genre_repository.save(genre_drama)
+
+        url = f"/api/genres/{genre_drama.id}/"
+        response = APIClient().delete(url)
+
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert len(genre_repository.list()) == 0
