@@ -9,9 +9,10 @@ from src.core.genre.application.use_cases.create_genre import CreateGenre, Creat
 from src.core.genre.application.use_cases.delete_genre import DeleteGenre, DeleteGenreRequest
 from src.core.genre.application.use_cases.exceptions import GenreNotFound, InvalidGenre, RelatedCategoriesNotFound
 from src.core.genre.application.use_cases.list_genre import ListGenre, RequestListGenre
+from src.core.genre.application.use_cases.update_genre import UpdateGenre, UpdateGenreRequest
 from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.django_project.apps.genre.repository import DjangoORMGenreRepository
-from src.django_project.apps.genre.serializers import CreateGenreRequestSerializer, CreateGenreResponseSerializer, DeleteGenreRequestSerializer, ListGenreResponseSerializer
+from src.django_project.apps.genre.serializers import CreateGenreRequestSerializer, CreateGenreResponseSerializer, DeleteGenreRequestSerializer, ListGenreResponseSerializer, UpdateGenreSerializer
 
 class GenreViewSet(viewsets.ViewSet):
     def list(self, request: Request) -> Response:
@@ -63,3 +64,38 @@ class GenreViewSet(viewsets.ViewSet):
             return Response(status=HTTP_404_NOT_FOUND)
         
         return Response(status=HTTP_204_NO_CONTENT)
+
+    def update(self, request: Request, pk: UUID=None) -> Response:
+        serializer = UpdateGenreSerializer(
+            data={**request.data, "id":pk},
+        )
+
+        serializer.is_valid(raise_exception=True)
+        request_dto = UpdateGenreRequest(**serializer.validated_data)
+        use_case = UpdateGenre(repository=DjangoORMGenreRepository(), categoryRepository=DjangoORMCategoryRepository())
+
+        try:
+            output = use_case.execute(request=request_dto)
+        except GenreNotFound as err:
+            return Response(status=HTTP_404_NOT_FOUND, data={"error": str(err)})
+        except (InvalidGenre, RelatedCategoriesNotFound) as et:
+            return Response(status=HTTP_400_BAD_REQUEST, data={"error": str(et)})
+        
+        return Response(status=HTTP_204_NO_CONTENT)
+
+    # def partial_update(self, request: Request, pk: UUID=None) -> Response:
+    #     serializer = PutCategorySerializer(
+    #         data={**request.data, "id":pk},
+    #         partial=True
+    #     )
+
+    #     serializer.is_valid(raise_exception=True)
+    #     request_dto = UpdateCategoryRequest(**serializer.validated_data)
+    #     use_case = UpdateCategory(repository=DjangoORMCategoryRepository())
+
+    #     try:
+    #         output = use_case.execute(request=request_dto)
+    #     except CategoryNotFound:
+    #         return Response(status=HTTP_404_NOT_FOUND)
+        
+    #     return Response(status=HTTP_204_NO_CONTENT)

@@ -136,3 +136,41 @@ class TestDelteAPI:
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
         assert len(genre_repository.list()) == 0
+    
+@pytest.mark.django_db
+class TestUpdateAPI:
+    def test_update_genre(
+            self,
+            genre_repository: DjangoORMGenreRepository,
+            category_repository: DjangoORMCategoryRepository,
+            genre_drama,
+            category_doc,
+            category_movie
+    ):
+        genre_repository.save(genre_drama)
+
+        with freeze_time("2024-09-09 23:23:23"):
+            url = f"/api/genres/{genre_drama.id}/"
+            response = APIClient().put(
+                url,
+                data={
+                    "name": "Atualizado",
+                    "is_active": "False",
+                    "categories_id": [
+                        f"{category_doc.id}",
+                        f"{category_movie.id}"
+                    ]
+                },
+                format="json"
+            )
+
+        print(response.data)
+        assert response.status_code == status.HTTP_204_NO_CONTENT
+        assert len(genre_repository.list()) == 1
+        updated_genre = genre_repository.get_by_id(id=genre_drama.id)
+
+        assert updated_genre.name == "Atualizado"
+        assert updated_genre.is_active is False
+        assert updated_genre.categories == {category_doc.id, category_movie.id}
+        assert updated_genre.updated_date is not None
+        assert str(updated_genre.updated_date) == "2024-09-09 23:23:23+00:00"
