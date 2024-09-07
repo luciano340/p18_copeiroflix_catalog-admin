@@ -44,7 +44,7 @@ class TestCreateGenre:
             repository=mock_genre_repository,
             category_repository=mock_empty_category_repository
         )
-        input = CreateGenreRequest(name="Ação", categories_ids={uuid.uuid4()})
+        input = CreateGenreRequest(name="Ação", categories_id={uuid.uuid4()})
 
         with pytest.raises(RelatedCategoriesNotFound):
             use_case.execute(input)
@@ -59,7 +59,7 @@ class TestCreateGenre:
             repository=mock_genre_repository,
             category_repository=mock_category_repository_with_categories
         )
-        input = CreateGenreRequest(name="", categories_ids={movie_category.id})
+        input = CreateGenreRequest(name="", categories_id={movie_category.id})
 
         with pytest.raises(InvalidGenre):
             use_case.execute(input)
@@ -75,7 +75,7 @@ class TestCreateGenre:
             repository=mock_genre_repository,
             category_repository=mock_category_repository_with_categories
         )
-        input = CreateGenreRequest(name="Terror", categories_ids={movie_category.id, documentary_category.id})
+        input = CreateGenreRequest(name="Terror", categories_id={movie_category.id, documentary_category.id})
 
         response = use_case.execute(request=input)
 

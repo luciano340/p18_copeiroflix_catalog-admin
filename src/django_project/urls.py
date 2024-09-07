@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
-from django_project.apps.category.views import CategoryViewSet
+from src.django_project.apps.category.views import CategoryViewSet
+from src.django_project.apps.genre.views import GenreViewSet
 
 
 router = DefaultRouter()
 router.register(r'api/categories', CategoryViewSet, basename="category")
+router.register(r'api/genres', GenreViewSet, basename="genre")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
