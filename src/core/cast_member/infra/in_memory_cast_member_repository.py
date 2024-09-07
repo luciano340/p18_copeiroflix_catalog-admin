@@ -20,10 +20,10 @@ class InMemoryCastMemberRepository(CategoryRepositoryInterface):
             if i.id == id:
                 self.castmembers.pop(n)
     
-    def update(self, cast_member: CastMember) -> None:
+    def update(self, castmember: CastMember) -> None:
         for n, i in enumerate(self.castmembers):
-            if i.id == cast_member.id:
-                self.castmembers[n] = cast_member
+            if i.id == castmember.id:
+                self.castmembers[n] = castmember
 
     def list(self) -> list[CastMember]:
         return [c for c in self.castmembers]

@@ -11,14 +11,14 @@ class TestUpdateCastMember:
     def test_can_update_CastMember_name_and_description(self):
         cast_member = CastMember(
             name="Charlie",
-            description="CONVIDADO"
+            type="CONVIDADO"
         )
         repository = InMemoryCastMemberRepository()
         repository.save(cast_member)
 
         use_case = UpdateCastMember(repository=repository)
         request=UpdateCastMemberRequest(
-            id=CastMember.id,
+            id=cast_member.id,
             name="Luke",
             type="APRESENTADOR"
         )
