@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
-from src.core.category.application.use_cases.exceptions import CategoryNotFound
+from src.core.genre.application.use_cases.exceptions import GenreNotFound
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
 
 @dataclass
@@ -13,10 +13,10 @@ class DeleteGenre:
         self.repository = repository
     
     def execute(self, request: DeleteGenreRequest):
-        category = self.repository.get_by_id(id=request.id)
+        genre = self.repository.get_by_id(id=request.id)
 
-        if category is None:
-            raise CategoryNotFound(f"Genre with id {request.id} not found for delete")
+        if genre is None:
+            raise GenreNotFound(f"Genre with id {request.id} not found for delete")
         
         self.repository.delete_by_id(id=request.id)
 
