@@ -1,19 +1,20 @@
 import pytest
-from src.core.category.domain.category import Category
-from src.django_project.apps.category.repository import DjangoORMCategoryRepository
-from src.django_project.apps.category.models import Category as CategoryModel
+
+from src.core.cast_member.domain.cast_member import CastMember
+from src.django_project.apps.cast_member.models import CastMemberModel
+from src.django_project.apps.cast_member.repository import DjangoORMCastMemberRepository
+
 
 @pytest.mark.django_db
 class TestRepository:
-    def test_save_category_in_database(self):
-        category = Category(
-            name="Documentário",
-            description="Chatão",
-            is_active=False
+    def test_save_CastMember_in_database(self):
+        cast_member = CastMember(
+            name="Vicinicius",
+            type="CONVIDADO"
         )
 
-        repository = DjangoORMCategoryRepository()
+        repository = DjangoORMCastMemberRepository()
 
-        assert CategoryModel.objects.count() == 0
-        repository.save(category)
-        assert CategoryModel.objects.count() == 1
+        assert CastMemberModel.objects.count() == 0
+        repository.save(cast_member)
+        assert CastMemberModel.objects.count() == 1
