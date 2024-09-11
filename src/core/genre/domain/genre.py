@@ -3,6 +3,8 @@ from datetime import datetime
 from uuid import UUID
 import uuid
 
+from src.core._shared.notification import Notification
+
 @dataclass
 class Genre:
     name: str
@@ -11,7 +13,8 @@ class Genre:
     updated_date: datetime = None
     id:  uuid.UUID = field(default_factory=uuid.uuid4)
     categories: set[UUID] = field(default_factory=set)
-
+    notificaiton: Notification = field(default_factory=Notification)
+    
     def __post_init__(self):
         self.__validation()
 
@@ -46,15 +49,16 @@ class Genre:
 
     def __validation(self):
         if len(self.name) > 255:
-            raise ValueError("name must have less than 255 characteres")
-    
+            self.notificaiton.add_error("name must have less than 255 characteres")
         if not self.name:
-            raise ValueError("name cannot be empty")
+            self.notificaiton.add_error("name cannot be empty")
     
         if len(self.categories) > 0:
             uuid_to_str = str(list(self.categories)[-1])
             try:
                 UUID(uuid_to_str)
             except:
-                raise ValueError(f"Not a valid UUID: {uuid_to_str}")
+                self.notificaiton.add_error(f"Not a valid UUID: {uuid_to_str}")
         
+        if self.notificaiton.has_errors:
+            raise ValueError(self.notificaiton.messages)
