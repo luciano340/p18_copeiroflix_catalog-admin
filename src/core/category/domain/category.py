@@ -3,7 +3,7 @@ from datetime import datetime
 from multiprocessing import Value
 import uuid
 
-from src.core.category.domain.notification import Notification
+from src.core._shared.notification import Notification
 
 @dataclass
 class Category:
