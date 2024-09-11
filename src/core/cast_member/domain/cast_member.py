@@ -3,6 +3,8 @@ from datetime import datetime
 from enum import StrEnum
 import uuid
 
+from src.core._shared.notification import Notification
+
 class CastMemberType(StrEnum):
     CONVIDADO = "CONVIDADO"
     APRESENTADOR = "APRESENTADOR"
@@ -14,6 +16,7 @@ class CastMember:
     updated_date: datetime = None
     name: str = None
     type: CastMemberType = None
+    notificaiton: Notification = field(default_factory=Notification)
 
     def __post_init__(self):
         self.__validation()
@@ -39,10 +42,13 @@ class CastMember:
 
     def __validation(self):
         if not self.name:
-            raise ValueError("name cannot be empty")
+            self.notificaiton.add_error("name cannot be empty")
         if len(self.name) > 255:
-            raise ValueError("name must have less than 255 characters")
+            self.notificaiton.add_error("name must have less than 255 characters")
         if self.type not in CastMemberType:
-            raise ValueError(f"type must be one of {list(CastMemberType)}")
+            self.notificaiton.add_error(f"type must be one of {list(CastMemberType)}")
         if not self.type:
-            raise ValueError("type cannot be empty")
+            self.notificaiton.add_error("type cannot be empty")
+
+        if self.notificaiton.has_errors:
+            raise ValueError(self.notificaiton.messages)
