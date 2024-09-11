@@ -1,6 +1,9 @@
 from dataclasses import dataclass, field
 from datetime import datetime
+from multiprocessing import Value
 import uuid
+
+from src.core.category.domain.notification import Notification
 
 @dataclass
 class Category:
@@ -10,6 +13,7 @@ class Category:
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
     id:  uuid.UUID = field(default_factory=uuid.uuid4)
+    notificaiton: Notification = field(default_factory=Notification)
 
     def __post_init__(self):
         self.__validation()
@@ -44,8 +48,10 @@ class Category:
 
     def __validation(self):
         if len(self.name) > 255:
-            raise ValueError("name must have less than 255 characteres")
+            self.notificaiton.add_error("name must have less than 255 characteres")
     
         if not self.name:
-            raise ValueError("name cannot be empty")
+            self.notificaiton.add_error("name cannot be empty")
         
+        if self.notificaiton.has_errors:
+            raise ValueError(self.notificaiton.messages)
