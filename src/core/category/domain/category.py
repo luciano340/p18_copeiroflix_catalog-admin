@@ -1,20 +1,17 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from multiprocessing import Value
-import uuid
 
-from src.core._shared.notification import Notification
+from src.core._shared.entity import Entity
+
 
 @dataclass
-class Category:
+class Category(Entity):
     name: str
     description: str = ""
     is_active: bool = True
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
-    id:  uuid.UUID = field(default_factory=uuid.uuid4)
-    notificaiton: Notification = field(default_factory=Notification)
-
+    
     def __post_init__(self):
         self.__validation()
 
@@ -23,10 +20,6 @@ class Category:
 
     def __repr__(self) -> str:
         return f"repr {self.id} - {self.name} - {self.description} - {self.is_active}"
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Category):
-            return False
         
         return self.id == other.id
 
