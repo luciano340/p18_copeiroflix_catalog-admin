@@ -1,19 +1,17 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import UUID
-import uuid
 
-from src.core._shared.notification import Notification
+from src.core._shared.entity import Entity
+
 
 @dataclass
-class Genre:
+class Genre(Entity):
     name: str
     is_active: bool = True
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
-    id:  uuid.UUID = field(default_factory=uuid.uuid4)
     categories: set[UUID] = field(default_factory=set)
-    notificaiton: Notification = field(default_factory=Notification)
     
     def __post_init__(self):
         self.__validation()
