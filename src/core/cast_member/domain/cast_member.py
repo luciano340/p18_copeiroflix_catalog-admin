@@ -3,6 +3,7 @@ from datetime import datetime
 from enum import StrEnum
 import uuid
 
+from src.core._shared.entity import Entity
 from src.core._shared.notification import Notification
 
 class CastMemberType(StrEnum):
@@ -10,13 +11,11 @@ class CastMemberType(StrEnum):
     APRESENTADOR = "APRESENTADOR"
 
 @dataclass
-class CastMember:
-    id: uuid.UUID = field(default_factory=uuid.uuid4)
+class CastMember(Entity):
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
-    name: str = None
+    name: str = ""
     type: CastMemberType = None
-    notificaiton: Notification = field(default_factory=Notification)
 
     def __post_init__(self):
         self.__validation()
@@ -26,11 +25,6 @@ class CastMember:
 
     def __repr__(self) -> str:
         return f"repr {self.id} - {self.name} - {self.type}"
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, CastMember):
-            return False
-        return self.id == other.id
 
     def update_cast_member(self, name: str = "", type: CastMemberType = None) -> None:
         if name:
