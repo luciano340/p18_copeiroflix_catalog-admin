@@ -8,25 +8,13 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
         self.category_model = category_model
     
     def save(self, category: Category) -> None:
-        self.category_model.objects.create(
-            id=category.id,
-            name=category.name,
-            description=category.description,
-            is_active=category.is_active,
-            created_date=category.created_date
-        )
+        category_orm = CategoryModelMapper.to_model(category)
+        category_orm.save()
     
     def get_by_id(self, id: UUID) -> Category | None:
         try:
             category_orm = self.category_model.objects.get(id=id)
-            return Category(
-                id=category_orm.id,
-                name=category_orm.name,
-                description=category_orm.description,
-                is_active=category_orm.is_active,
-                created_date=category_orm.created_date,
-                updated_date=category_orm.updated_date
-            )
+            return CategoryModelMapper.to_entity(category_orm)
         except self.category_model.DoesNotExist:
             return None
     
@@ -35,15 +23,8 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
     
     def list(self) -> list[Category]:
         return [
-            Category(
-                id=category.id,
-                name=category.name,
-                description=category.description,
-                is_active=category.is_active,
-                created_date=category.created_date,
-                updated_date=category.updated_date
-            )
-            for category in self.category_model.objects.all()
+            CategoryModelMapper.to_entity(category_model)
+            for category_model in self.category_model.objects.all()
         ]
 
     def update(self, category: Category) -> None:
@@ -51,5 +32,28 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
             name=category.name,
             description=category.description,
             is_active=category.is_active,
+            updated_date=category.updated_date
+        )
+
+class CategoryModelMapper:
+    @staticmethod
+    def to_model(category: Category) -> CategoryModel:
+        return CategoryModel(
+            id=category.id,
+            name=category.name,
+            description=category.description,
+            is_active=category.is_active,
+            created_date=category.created_date,
+            updated_date=category.updated_date
+        )
+
+    @staticmethod
+    def to_entity(category: CategoryModel) -> Category:
+        return Category(
+            id=category.id,
+            name=category.name,
+            description=category.description,
+            is_active=category.is_active,
+            created_date=category.created_date,
             updated_date=category.updated_date
         )
