@@ -1,10 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import StrEnum
-import uuid
 
 from src.core._shared.entity import Entity
-from src.core._shared.notification import Notification
 
 class CastMemberType(StrEnum):
     CONVIDADO = "CONVIDADO"
