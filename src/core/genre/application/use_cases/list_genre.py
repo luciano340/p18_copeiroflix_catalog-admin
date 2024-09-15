@@ -1,6 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
+import os
 from uuid import UUID
+from src.core._shared.dto import ListOuputMeta
 from src.core.genre.application.use_cases.exceptions import GenreOrderNotFound
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
 from django.core.exceptions import FieldError
@@ -17,10 +19,12 @@ class GenreOutput:
 @dataclass
 class RequestListGenre:
     order_by: str = "name"
+    current_page: int = 1
 
 @dataclass
 class ResponseListGenre:
     data: list[GenreOutput]
+    meta: ListOuputMeta = field(default_factory=ListOuputMeta)
 
 class ListGenre():
     def __init__(self, repository: GenreRepositoryInterface) -> None:
@@ -42,4 +46,16 @@ class ListGenre():
                 updated_date=g.updated_date
             ) for g in genres
         ]
-        return ResponseListGenre(data=mapped_genres)
+
+        DEFAULT_PAGE_SIZE = os.environ.get("page_size", 5)
+        page_offset = (request.current_page - 1) * DEFAULT_PAGE_SIZE
+        genres_page = mapped_genres[page_offset:page_offset + DEFAULT_PAGE_SIZE]
+
+        return ResponseListGenre(
+            data=genres_page,
+            meta=ListOuputMeta(
+                current_page=request.current_page,
+                page_size=DEFAULT_PAGE_SIZE,
+                total=len(mapped_genres)
+            )
+        )

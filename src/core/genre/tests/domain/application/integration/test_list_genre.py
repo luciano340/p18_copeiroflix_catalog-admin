@@ -1,4 +1,5 @@
 from freezegun import freeze_time
+from src.core._shared.dto import ListOuputMeta
 from src.core.category.domain.category import Category
 from src.core.category.infra.in_memory_category_repository import InMemoryCategoryRepository
 from src.core.genre.application.use_cases import list_genre
@@ -44,7 +45,8 @@ class TestListGenre:
                     created_date="2024-09-03 07:07:07",
                     updated_date=None
                 )
-            ]
+            ],
+            meta=ListOuputMeta(current_page=1, page_size=5, total=1)
         )
 
         

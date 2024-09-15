@@ -1,6 +1,8 @@
 from email.policy import default
 from rest_framework import serializers
 
+from src.django_project.apps._shared.serializers import ListOutputMetaSerializer
+
 class GenreResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=255, allow_blank=False)
@@ -11,7 +13,8 @@ class GenreResponseSerializer(serializers.Serializer):
 
 class ListGenreResponseSerializer(serializers.Serializer):
     data = GenreResponseSerializer(many=True)
-
+    meta = ListOutputMetaSerializer()
+    
 class SetField(serializers.ListField):
     def to_internal_value(self, data):
         return set(super().to_internal_value(data))
