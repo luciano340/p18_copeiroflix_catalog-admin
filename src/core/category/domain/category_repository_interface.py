@@ -21,5 +21,5 @@ class CategoryRepositoryInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def list(self, order_by) -> list[Category]:
+    def list(self, order_by: str = "name") -> list[Category]:
         raise NotImplementedError

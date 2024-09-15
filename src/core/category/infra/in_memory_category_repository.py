@@ -25,5 +25,5 @@ class InMemoryCategoryRepository(CategoryRepositoryInterface):
             if i.id == category.id:
                 self.categories[n] = category
 
-    def list(self) -> list[Category]:
+    def list(self, order_by: str = "name") -> list[Category]:
         return [c for c in self.categories]

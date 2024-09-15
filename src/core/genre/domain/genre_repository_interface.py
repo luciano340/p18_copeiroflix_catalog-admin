@@ -22,5 +22,5 @@ class GenreRepositoryInterface(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def list(self) -> list[Genre]:
+    def list(self, order_by: str) -> list[Genre]:
         raise NotImplementedError

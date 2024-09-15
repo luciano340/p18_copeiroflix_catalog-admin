@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
 from uuid import UUID
+from src.core.genre.application.use_cases.exceptions import GenreOrderNotFound
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
+from django.core.exceptions import FieldError
 
 @dataclass
 class GenreOutput:
@@ -14,7 +16,7 @@ class GenreOutput:
     
 @dataclass
 class RequestListGenre:
-    pass
+    order_by: str = "name"
 
 @dataclass
 class ResponseListGenre:
@@ -25,7 +27,11 @@ class ListGenre():
         self.repository = repository
     
     def execute(self, request: RequestListGenre):
-        genres = self.repository.list()
+        try:
+            genres = self.repository.list(order_by=request.order_by)
+        except FieldError:
+            raise GenreOrderNotFound(f'Field {request.order_by} not found')
+
         mapped_genres = [
             GenreOutput(
                 id=g.id,

@@ -35,10 +35,10 @@ class DjangoORMGenreRepository(GenreRepositoryInterface):
             )
             genre_model.categories.set(genre.categories)
 
-    def list(self) -> list[Genre]:
+    def list(self, order_by: str = "name") -> list[Genre]:
         genre_list = [
             CategoryModelMapper.to_entity(genre_model)
-            for genre_model in GenreORM.objects.all()
+            for genre_model in GenreORM.objects.all().order_by(order_by)
         ]
 
         return genre_list

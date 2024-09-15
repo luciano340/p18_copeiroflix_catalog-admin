@@ -68,19 +68,19 @@ class TestListAPI:
 
         assert response.status_code == status.HTTP_200_OK
         assert response.data["data"]
-        assert response.data["data"][0]["id"] == str(genre_terror.id)
-        assert response.data["data"][0]["name"] == genre_terror.name
-        assert response.data["data"][0]["is_active"] == genre_terror.is_active
-        assert set(response.data["data"][0]["categories_id"]) == {
+        assert response.data["data"][1]["id"] == str(genre_terror.id)
+        assert response.data["data"][1]["name"] == genre_terror.name
+        assert response.data["data"][1]["is_active"] == genre_terror.is_active
+        assert set(response.data["data"][1]["categories_id"]) == {
             str(category_doc.id),
             str(category_movie.id)
         }
 
         assert response.data["data"]
-        assert response.data["data"][1]["id"] == str(genre_drama.id)
-        assert response.data["data"][1]["name"] == genre_drama.name
-        assert response.data["data"][1]["is_active"] == genre_drama.is_active
-        assert response.data["data"][1]["categories_id"] == []
+        assert response.data["data"][0]["id"] == str(genre_drama.id)
+        assert response.data["data"][0]["name"] == genre_drama.name
+        assert response.data["data"][0]["is_active"] == genre_drama.is_active
+        assert response.data["data"][0]["categories_id"] == []
     
 
 @pytest.mark.django_db
