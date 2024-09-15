@@ -24,10 +24,10 @@ class DjangoORMCastMemberRepository(CastMemberRepositoryInterface):
     def delete_by_id(self, id: UUID) -> None:
         self.CastMember_model.objects.filter(id=id).delete()
     
-    def list(self) -> list[CastMember]:
+    def list(self, order_by: str = "name") -> list[CastMember]:
         return [
             CastMemberModelMapper.to_entity(cm)
-            for cm in self.CastMember_model.objects.all()
+            for cm in self.CastMember_model.objects.all().order_by(order_by)
         ]
 
     def update(self, castmember: CastMember) -> None:

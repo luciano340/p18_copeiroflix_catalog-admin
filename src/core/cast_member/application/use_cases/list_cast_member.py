@@ -2,7 +2,9 @@
 from dataclasses import dataclass
 import datetime
 from uuid import UUID
+from django.core.exceptions import FieldError
 
+from src.core.cast_member.application.use_cases.exceptions import CastMemberOrderNotFound
 from src.core.cast_member.domain.cast_member import CastMemberType
 from src.core.cast_member.domain.cast_member_repository_interface import CastMemberRepositoryInterface
 
@@ -17,7 +19,7 @@ class CastMemberOutput:
     
 @dataclass
 class RequestListCastMember:
-    pass
+    order_by: str = "name"
 
 @dataclass
 class ResponseListCastMember:
@@ -28,7 +30,11 @@ class ListCastMember():
         self.repository = repository
     
     def execute(self, request: RequestListCastMember) -> ResponseListCastMember:
-        CastMembers = self.repository.list()
+        try:
+            CastMembers = self.repository.list(order_by=request.order_by)
+        except FieldError:
+            raise CastMemberOrderNotFound(f'Filed {request.order_by} not found')
+        
         mapped_CastMembers = [
             CastMemberOutput(
                 id=cm.id,

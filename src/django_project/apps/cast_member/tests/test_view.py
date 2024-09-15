@@ -46,18 +46,18 @@ class TestListAPI:
         expected_data = {
             "data": [
                 {
-                    "id": str(CastMember_1.id),
-                    "name": CastMember_1.name,
-                    "type": CastMember_1.type,
-                    "created_date": CastMember_1.created_date,
-                    "updated_date": CastMember_1.updated_date
-                },
-                {
                     "id": str(CastMember_2.id),
                     "name": CastMember_2.name,
                     "type": CastMember_2.type,
                     "created_date": CastMember_2.created_date,
                     "updated_date": CastMember_2.updated_date
+                },
+                {
+                    "id": str(CastMember_1.id),
+                    "name": CastMember_1.name,
+                    "type": CastMember_1.type,
+                    "created_date": CastMember_1.created_date,
+                    "updated_date": CastMember_1.updated_date
                 }
             ]
         }     

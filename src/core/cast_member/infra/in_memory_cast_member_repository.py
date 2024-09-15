@@ -25,5 +25,5 @@ class InMemoryCastMemberRepository(CategoryRepositoryInterface):
             if i.id == castmember.id:
                 self.castmembers[n] = castmember
 
-    def list(self) -> list[CastMember]:
+    def list(self, order_by: str) -> list[CastMember]:
         return [c for c in self.castmembers]
