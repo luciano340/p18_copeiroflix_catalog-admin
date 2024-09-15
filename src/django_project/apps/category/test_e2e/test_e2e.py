@@ -11,7 +11,14 @@ class Teste2e:
         api_client = APIClient()
 
         list_response = api_client.get("/api/categories/")
-        assert list_response.data == {"data": []}
+        assert list_response.data == {
+            "data": [],
+            "meta": {
+                "current_page": 1,
+                "page_size": 5,
+                "total": 0
+            }
+        }
 
         create_response = api_client.post(
             "/api/categories/",
@@ -27,6 +34,7 @@ class Teste2e:
         list_response = api_client.get("/api/categories/")
         assert list_response.status_code == status.HTTP_200_OK
         assert len(list_response.data["data"]) == 1
+        assert list_response.data["meta"]["total"] == 1
         
         category_test = list_response.data["data"][0]
 
@@ -61,4 +69,11 @@ class Teste2e:
         assert delete_response.status_code == status.HTTP_204_NO_CONTENT
 
         list_response = api_client.get("/api/categories/")
-        assert list_response.data == {"data": []}
+        assert list_response.data == {
+            "data": [],
+            "meta": {
+                "current_page": 1,
+                "page_size": 5,
+                "total": 0
+            }
+        }
