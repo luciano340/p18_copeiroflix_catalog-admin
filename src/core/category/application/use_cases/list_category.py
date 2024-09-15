@@ -1,3 +1,4 @@
+import os
 from dataclasses import dataclass, field
 from uuid import UUID
 from datetime import datetime
@@ -47,7 +48,7 @@ class ListCategory:
             ) for category in categories
         ]
 
-        DEFAULT_PAGE_SIZE = 5 
+        DEFAULT_PAGE_SIZE = os.environ.get("page_size", 5)
         page_offset = (request.current_page - 1) * DEFAULT_PAGE_SIZE
         categories_page = categories[page_offset:page_offset + DEFAULT_PAGE_SIZE]
 
