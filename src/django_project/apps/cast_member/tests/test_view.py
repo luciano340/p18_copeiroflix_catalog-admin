@@ -1,3 +1,4 @@
+from datetime import datetime
 import uuid
 from rest_framework.test import APIClient
 import pytest
@@ -45,20 +46,25 @@ class TestListAPI:
         expected_data = {
             "data": [
                 {
-                    "id": str(CastMember_1.id),
-                    "name": CastMember_1.name,
-                    "type": CastMember_1.type,
-                    "created_date": CastMember_1.created_date,
-                    "updated_date": CastMember_1.updated_date
-                },
-                {
                     "id": str(CastMember_2.id),
                     "name": CastMember_2.name,
                     "type": CastMember_2.type,
                     "created_date": CastMember_2.created_date,
                     "updated_date": CastMember_2.updated_date
+                },
+                {
+                    "id": str(CastMember_1.id),
+                    "name": CastMember_1.name,
+                    "type": CastMember_1.type,
+                    "created_date": CastMember_1.created_date,
+                    "updated_date": CastMember_1.updated_date
                 }
-            ]
+            ],
+            "meta": {
+                "current_page": 1,
+                "page_size": 5,
+                "total": 2
+            }
         }     
 
         assert response.status_code == status.HTTP_200_OK
@@ -124,21 +130,25 @@ class TestCreateCastMember:
         CastMember_repository: DjangoORMCastMemberRepository
     ) -> None:
         url = "/api/cast_members/"
-        response = APIClient().post(
-            url,
-            data={
-                "name": "André",
-                "type": "APRESENTADOR"
-            }
-        )
 
+        with freeze_time("2024-09-14 04:04:04"):
+            response = APIClient().post(
+                url,
+                data={
+                    "name": "André",
+                    "type": "APRESENTADOR"
+                }
+            )
+
+        cm_raw = CastMember(
+            id=uuid.UUID(response.data["id"]),
+            name="André",
+            type="APRESENTADOR",
+            created_date=datetime.fromisoformat("2024-09-14 04:04:04+00:00")
+        )
         assert response.status_code == status.HTTP_201_CREATED
         assert CastMember_repository.list() == [
-            CastMember(
-                id=uuid.UUID(response.data["id"]),
-                name="André",
-                type="APRESENTADOR"
-            )
+            cm_raw
         ]
 
 @pytest.mark.django_db
@@ -254,13 +264,10 @@ class TestUpdatePartialAPI:
         edited_CastMember = CastMember_repository.list()[0]
 
         assert response.status_code == status.HTTP_204_NO_CONTENT
-        assert edited_CastMember == CastMember(
-            id=CastMember_2.id,
-            name=CastMember_2.name,
-            type="CONVIDADO",
-            created_date=CastMember_2.created_date,
-            updated_date="2024-09-01 03:03:03"
-        )
+        assert edited_CastMember.id == CastMember_2.id
+        assert edited_CastMember.name == CastMember_2.name
+        assert edited_CastMember.type == "CONVIDADO"
+        assert edited_CastMember.updated_date.isoformat(sep=" ", timespec="seconds") == "2024-09-01 03:03:03+00:00"
 
 
     def test_when_CastMember_does_not_exist(self):

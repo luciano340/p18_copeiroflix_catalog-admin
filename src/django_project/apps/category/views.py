@@ -2,24 +2,45 @@ from uuid import UUID
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.request import Request
-from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
 from src.core.category.application.use_cases.create_category import CreateCategory, CreateCategoryRequest
 from src.core.category.application.use_cases.delete_category import DeleteCategory, DeleteCategoryRequest
-from src.core.category.application.use_cases.exceptions import CategoryNotFound
+from src.core.category.application.use_cases.exceptions import CategoryNotFound, CategoryOrderNotFound
 from src.core.category.application.use_cases.get_category import GetCategory, GetCategoryRequest
 from src.core.category.application.use_cases.list_category import ListCategory, ListCategoryRequest
 from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.core.category.application.use_cases.update_category import UpdateCategory, UpdateCategoryRequest
-from src.django_project.apps.category import repository
-from src.django_project.apps.category import serializers
-from src.django_project.apps.category.serializers import CategoryResponseSerializer, CreateCategoryRequestSerializer, CreateCategoryResponseSerializer, DeleteCategoryRequestSerializer, ListCategoryResponseSerializer, PutCategorySerializer, RetrieveCategoryRequestSerializer, RetrieveCategoryResponseSerializer, UpdateCategorySerializer
+from src.django_project.apps.category.serializers import CreateCategoryRequestSerializer, CreateCategoryResponseSerializer, DeleteCategoryRequestSerializer, ListCategoryResponseSerializer, PutCategorySerializer, RetrieveCategoryRequestSerializer, RetrieveCategoryResponseSerializer, UpdateCategorySerializer
 
 
 class CategoryViewSet(viewsets.ViewSet):
     def list(self, request: Request) -> Response:
-        input = ListCategoryRequest
+        order_by = request.query_params.get("order_by", "name")
+        try:
+            current_page = int(request.query_params.get("current_page", 1))
+        except ValueError as err:
+            return Response(
+                status=HTTP_400_BAD_REQUEST,
+                data={
+                    "error": "Invalid page number"
+                }
+            )
+        
+        input = ListCategoryRequest(
+            order_by=order_by,
+            current_page=current_page
+        )
         use_case = ListCategory(repository=DjangoORMCategoryRepository())
-        output = use_case.execute(input)
+
+        try:
+            output = use_case.execute(input)
+        except CategoryOrderNotFound as err:
+            return Response(
+                status=HTTP_400_BAD_REQUEST,
+                data={
+                    "error": str(err)
+                }
+            )
         
         serializer = ListCategoryResponseSerializer(instance=output)
 

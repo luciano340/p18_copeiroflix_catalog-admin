@@ -12,3 +12,6 @@ class GenreNotFound(Exception):
 
 class RelatedCategoriesInvalid(Exception):
     pass
+
+class GenreOrderNotFound(Exception):
+    pass

@@ -27,5 +27,5 @@ class InMemoryGenreRepository(GenreRepositoryInterface):
             if i.id == genre.id:
                 self.categories[n] = genre
 
-    def list(self) -> list[Genre]:
+    def list(self, order_by: str = "name") -> list[Genre]:
         return [c for c in self.categories]

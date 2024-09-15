@@ -11,39 +11,23 @@ class DjangoORMCastMemberRepository(CastMemberRepositoryInterface):
         self.CastMember_model = CastMember_model
     
     def save(self, cast_member: CastMember) -> None:
-        self.CastMember_model.objects.create(
-            id=cast_member.id,
-            name=cast_member.name,
-            type=cast_member.type,
-            created_date=cast_member.created_date
-        )
+        cast_member_model = CastMemberModelMapper.to_model(cast_member)
+        cast_member_model.save()
     
     def get_by_id(self, id: UUID) -> CastMember | None:
         try:
             cast_member_orm = self.CastMember_model.objects.get(id=id)
-            return CastMember(
-                id=cast_member_orm.id,
-                name=cast_member_orm.name,
-                type=cast_member_orm.type,
-                created_date=cast_member_orm.created_date,
-                updated_date=cast_member_orm.updated_date
-            )
+            return CastMemberModelMapper.to_entity(cast_member_orm)
         except self.CastMember_model.DoesNotExist:
             return None
     
     def delete_by_id(self, id: UUID) -> None:
         self.CastMember_model.objects.filter(id=id).delete()
     
-    def list(self) -> list[CastMember]:
+    def list(self, order_by: str = "name") -> list[CastMember]:
         return [
-            CastMember(
-                id=cm.id,
-                name=cm.name,
-                type=cm.type,
-                created_date=cm.created_date,
-                updated_date=cm.updated_date
-            )
-            for cm in self.CastMember_model.objects.all()
+            CastMemberModelMapper.to_entity(cm)
+            for cm in self.CastMember_model.objects.all().order_by(order_by)
         ]
 
     def update(self, castmember: CastMember) -> None:
@@ -51,4 +35,25 @@ class DjangoORMCastMemberRepository(CastMemberRepositoryInterface):
             name=castmember.name,
             type=castmember.type,
             updated_date=castmember.updated_date
+        )
+
+class CastMemberModelMapper:
+    @staticmethod
+    def to_model(cast_member: CastMember) -> CastMemberModel:
+        return CastMemberModel(
+            id=cast_member.id,
+            name=cast_member.name,
+            type=cast_member.type,
+            created_date=cast_member.created_date,
+            updated_date=cast_member.updated_date
+        )
+
+    @staticmethod
+    def to_entity(cast_member_model: CastMemberModel) -> CastMember:
+        return CastMember(
+            id=cast_member_model.id,
+            name=cast_member_model.name,
+            type=cast_member_model.type,
+            created_date=cast_member_model.created_date,
+            updated_date=cast_member_model.updated_date
         )

@@ -1,6 +1,8 @@
 from email.policy import default
 from rest_framework import serializers
 
+from src.django_project.apps._shared.serializers import ListOutputMetaSerializer
+
 class CategoryResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
     name = serializers.CharField(max_length=255, allow_blank=False)
@@ -11,6 +13,7 @@ class CategoryResponseSerializer(serializers.Serializer):
 
 class ListCategoryResponseSerializer(serializers.Serializer):
     data = CategoryResponseSerializer(many=True)
+    meta = ListOutputMetaSerializer()
 
 class RetrieveCategoryResponseSerializer(serializers.Serializer):
     data = CategoryResponseSerializer(source="*")

@@ -3,3 +3,6 @@ class InvalidCastMemberData(Exception):
 
 class CastMemberNotFound(Exception):
     pass
+
+class CastMemberOrderNotFound(Exception):
+    pass

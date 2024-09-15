@@ -1,7 +1,9 @@
+from ast import List
 from email.policy import default
 from rest_framework import serializers
 
 from src.core.cast_member.domain.cast_member import CastMemberType
+from src.django_project.apps._shared.serializers import ListOutputMetaSerializer
 
 class CastMemberTypeField(serializers.ChoiceField):
     def __init__(self, **kwargs):
@@ -23,6 +25,7 @@ class CastMemberResponseSerializer(serializers.Serializer):
 
 class ListCastMemberResponseSerializer(serializers.Serializer):
     data = CastMemberResponseSerializer(many=True)
+    meta = ListOutputMetaSerializer()
 
 class RetrieveCastMemberResponseSerializer(serializers.Serializer):
     data = CastMemberResponseSerializer(source="*")

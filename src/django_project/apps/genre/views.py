@@ -16,8 +16,18 @@ from src.django_project.apps.genre.serializers import CreateGenreRequestSerializ
 
 class GenreViewSet(viewsets.ViewSet):
     def list(self, request: Request) -> Response:
+        order_by = request.query_params.get("order_by", "name")
+        try:
+            current_page = int(request.query_params.get("current_page", 1))
+        except ValueError as err:
+            return Response(
+                status=HTTP_400_BAD_REQUEST,
+                data={
+                    "error": "Invalid page number"
+                }
+            )
         use_case = ListGenre(repository=DjangoORMGenreRepository())
-        output = use_case.execute(request=RequestListGenre())
+        output = use_case.execute(request=RequestListGenre(order_by=order_by, current_page=current_page))
         
         response = ListGenreResponseSerializer(output)
 

@@ -1,16 +1,17 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-import uuid
+
+from src.core._shared.entity import Entity
+
 
 @dataclass
-class Category:
+class Category(Entity):
     name: str
     description: str = ""
     is_active: bool = True
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
-    id:  uuid.UUID = field(default_factory=uuid.uuid4)
-
+    
     def __post_init__(self):
         self.__validation()
 
@@ -19,10 +20,6 @@ class Category:
 
     def __repr__(self) -> str:
         return f"repr {self.id} - {self.name} - {self.description} - {self.is_active}"
-
-    def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Category):
-            return False
         
         return self.id == other.id
 
@@ -44,8 +41,10 @@ class Category:
 
     def __validation(self):
         if len(self.name) > 255:
-            raise ValueError("name must have less than 255 characteres")
+            self.notificaiton.add_error("name must have less than 255 characteres")
     
         if not self.name:
-            raise ValueError("name cannot be empty")
+            self.notificaiton.add_error("name cannot be empty")
         
+        if self.notificaiton.has_errors:
+            raise ValueError(self.notificaiton.messages)

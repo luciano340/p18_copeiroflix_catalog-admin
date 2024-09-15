@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 import uuid
 from rest_framework.test import APIClient
 import pytest
@@ -44,22 +45,27 @@ class TestListAPI:
         expected_data = {
             "data": [
                 {
-                    "id": str(category_movie.id),
-                    "name": category_movie.name,
-                    "description": category_movie.description,
-                    "is_active": category_movie.is_active,
-                    "created_date": category_movie.created_date,
-                    "updated_date": category_movie.updated_date
-                },
-                {
                     "id": str(category_documentary.id),
                     "name": category_documentary.name,
                     "description": category_documentary.description,
                     "is_active": category_documentary.is_active,
                     "created_date": category_documentary.created_date,
                     "updated_date": category_documentary.updated_date
+                },
+                {
+                    "id": str(category_movie.id),
+                    "name": category_movie.name,
+                    "description": category_movie.description,
+                    "is_active": category_movie.is_active,
+                    "created_date": category_movie.created_date,
+                    "updated_date": category_movie.updated_date
                 }
-            ]
+            ],
+            "meta": {
+                "current_page": 1,
+                "page_size": 5,
+                "total": 2
+            }
         }     
 
         assert response.status_code == status.HTTP_200_OK
@@ -126,22 +132,27 @@ class TestCreateCategory:
         category_repository: DjangoORMCategoryRepository
     ) -> None:
         url = "/api/categories/"
-        response = APIClient().post(
-            url,
-            data={
-                "name": "Filme",
-                "description": "Teste"
-            }
-        )
+
+        with freeze_time("2024-09-09 08:08:08"):
+            response = APIClient().post(
+                url,
+                data={
+                    "name": "Filme",
+                    "description": "Teste"
+                }
+            )
 
         assert response.status_code == status.HTTP_201_CREATED
         assert category_repository.list() == [
             Category(
                 id=uuid.UUID(response.data["id"]),
                 name="Filme",
-                description="Teste"
+                description="Teste",
+                created_date=datetime.fromisoformat("2024-09-09 08:08:08+00:00")
             )
         ]
+
+
 
 @pytest.mark.django_db
 class TestUpdateAPI:
@@ -263,8 +274,8 @@ class TestUpdatePartialAPI:
             name=category_documentary.name,
             description="oi",
             is_active=category_documentary.is_active,
-            created_date=category_documentary.created_date,
-            updated_date="2024-09-01 03:03:03"
+            created_date=datetime.fromisoformat(category_documentary.created_date).replace(tzinfo=timezone.utc),
+            updated_date=datetime.fromisoformat("2024-09-01 03:03:03+00:00")
         )
 
 

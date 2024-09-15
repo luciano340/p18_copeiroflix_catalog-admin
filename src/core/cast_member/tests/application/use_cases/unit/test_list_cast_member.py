@@ -1,6 +1,7 @@
 from unittest.mock import create_autospec
 import uuid
 
+from src.core._shared.dto import ListOuputMeta
 from src.core.cast_member.application.use_cases.list_cast_member import CastMemberOutput, ListCastMember, RequestListCastMember, ResponseListCastMember
 from src.core.cast_member.domain.cast_member import CastMember
 from src.core.cast_member.domain.cast_member_repository_interface import CastMemberRepositoryInterface
@@ -16,7 +17,8 @@ class TestListCastMember:
         response = use_case.execute(request=request)
 
         assert response == ResponseListCastMember(
-            data=[]
+            data=[],
+            meta=ListOuputMeta(current_page=1, page_size=5, total=0)
         )
 
 
@@ -59,5 +61,6 @@ class TestListCastMember:
                     created_date=cast_member2.created_date,
                     updated_date=cast_member2.updated_date
                 )
-            ]
+            ],
+            meta=ListOuputMeta(current_page=1, page_size=5, total=2)
         )
