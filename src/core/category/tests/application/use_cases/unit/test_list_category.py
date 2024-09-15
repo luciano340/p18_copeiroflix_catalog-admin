@@ -1,6 +1,7 @@
 from unicodedata import category
 from unittest.mock import create_autospec
 import uuid
+from src.core._shared.dto import ListOuputMeta
 from src.core.category.domain.category_repository_interface import CategoryRepositoryInterface
 from src.core.category.application.use_cases.list_category import CategoryOutput, ListCategory, ListCategoryRequest, ListCategoryResponse
 from src.core.category.domain.category import Category
@@ -16,7 +17,8 @@ class TestListCategory:
         response = use_case.execute(request=request)
 
         assert response == ListCategoryResponse(
-            data=[]
+            data=[],
+            meta=ListOuputMeta(current_page=1, page_size=5, total=0)
         )
 
 
@@ -63,5 +65,6 @@ class TestListCategory:
                     created_date=category_serie.created_date,
                     updated_date=category_serie.updated_date
                 )
-            ]
+            ],
+            meta=ListOuputMeta(current_page=1, page_size=5, total=2)
         )
