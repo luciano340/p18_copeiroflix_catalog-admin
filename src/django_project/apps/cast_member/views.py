@@ -17,9 +17,22 @@ from src.django_project.apps.cast_member.serializers import CreateCastMemberRequ
 class CastMemberViewSet(viewsets.ViewSet):
     def list(self, request: Request) -> Response:
         order_by = request.query_params.get("order_by", "name")
+
+        try:
+            current_page = int(request.query_params.get("current_page", 1))
+        except ValueError:
+            return Response(
+                status=HTTP_400_BAD_REQUEST,
+                data={
+                    "error": "Invalid page number"
+                }
+            )
+        
         input = RequestListCastMember(
-            order_by=order_by
+            order_by=order_by,
+            current_page=current_page
         )
+
         use_case = ListCastMember(repository=DjangoORMCastMemberRepository())
 
         try:

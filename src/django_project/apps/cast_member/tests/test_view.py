@@ -59,7 +59,12 @@ class TestListAPI:
                     "created_date": CastMember_1.created_date,
                     "updated_date": CastMember_1.updated_date
                 }
-            ]
+            ],
+            "meta": {
+                "current_page": 1,
+                "page_size": 5,
+                "total": 2
+            }
         }     
 
         assert response.status_code == status.HTTP_200_OK
