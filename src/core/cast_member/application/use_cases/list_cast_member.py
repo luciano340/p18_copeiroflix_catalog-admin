@@ -6,6 +6,7 @@ from uuid import UUID
 from django.core.exceptions import FieldError
 
 from src.core._shared.dto import ListOuputMeta
+from src.core._shared.factory_pagination import CreateListPagination
 from src.core.cast_member.application.use_cases.exceptions import CastMemberOrderNotFound
 from src.core.cast_member.domain.cast_member import CastMemberType
 from src.core.cast_member.domain.cast_member_repository_interface import CastMemberRepositoryInterface
@@ -49,15 +50,16 @@ class ListCastMember():
             ) for cm in CastMembers
         ]
 
-        DEFAULT_PAGE_SIZE = os.environ.get("page_size", 5)
-        page_offset = (request.current_page - 1) * DEFAULT_PAGE_SIZE
-        castmembers_page = mapped_CastMembers[page_offset:page_offset + DEFAULT_PAGE_SIZE]
+        castmembers_page = CreateListPagination.configure_pagination(
+            mapped_list=mapped_CastMembers, 
+            current_page=request.current_page
+        )
 
         return ResponseListCastMember(
             data=castmembers_page,
             meta=ListOuputMeta(
                 current_page=request.current_page,
-                page_size=DEFAULT_PAGE_SIZE,
+                page_size=os.environ.get("page_size", 5),
                 total=len(castmembers_page)
             )
         )

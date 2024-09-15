@@ -1,9 +1,10 @@
-import os
 from dataclasses import dataclass, field
+import os
 from uuid import UUID
 from datetime import datetime
 from django.core.exceptions import FieldError
 from src.core._shared.dto import ListOuputMeta
+from src.core._shared.factory_pagination import CreateListPagination
 from src.core.category.application.use_cases.exceptions import CategoryOrderNotFound
 from src.core.category.domain.category_repository_interface import CategoryRepositoryInterface
 
@@ -48,15 +49,16 @@ class ListCategory:
             ) for category in categories
         ]
 
-        DEFAULT_PAGE_SIZE = os.environ.get("page_size", 5)
-        page_offset = (request.current_page - 1) * DEFAULT_PAGE_SIZE
-        categories_page = categories[page_offset:page_offset + DEFAULT_PAGE_SIZE]
+        categories_page = CreateListPagination.configure_pagination(
+            mapped_list=categories, 
+            current_page=request.current_page
+        )
 
         return ListCategoryResponse(
             data=categories_page,
             meta=ListOuputMeta(
                 current_page=request.current_page,
-                page_size=DEFAULT_PAGE_SIZE,
+                page_size=os.environ.get("page_size", 5),
                 total=len(categories)
             )
         )

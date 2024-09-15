@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 from uuid import UUID
 from src.core._shared.dto import ListOuputMeta
+from src.core._shared.factory_pagination import CreateListPagination
 from src.core.genre.application.use_cases.exceptions import GenreOrderNotFound
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
 from django.core.exceptions import FieldError
@@ -46,16 +47,17 @@ class ListGenre():
                 updated_date=g.updated_date
             ) for g in genres
         ]
-
-        DEFAULT_PAGE_SIZE = os.environ.get("page_size", 5)
-        page_offset = (request.current_page - 1) * DEFAULT_PAGE_SIZE
-        genres_page = mapped_genres[page_offset:page_offset + DEFAULT_PAGE_SIZE]
+        
+        genres_page = CreateListPagination.configure_pagination(
+            mapped_list=mapped_genres, 
+            current_page=request.current_page
+        )
 
         return ResponseListGenre(
             data=genres_page,
             meta=ListOuputMeta(
                 current_page=request.current_page,
-                page_size=DEFAULT_PAGE_SIZE,
+                page_size=os.environ.get("page_size", 5),
                 total=len(mapped_genres)
             )
         )
