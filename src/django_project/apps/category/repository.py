@@ -21,10 +21,10 @@ class DjangoORMCategoryRepository(CategoryRepositoryInterface):
     def delete_by_id(self, id: UUID) -> None:
         self.category_model.objects.filter(id=id).delete()
     
-    def list(self) -> list[Category]:
+    def list(self, order_by: str = "name") -> list[Category]:
         return [
             CategoryModelMapper.to_entity(category_model)
-            for category_model in self.category_model.objects.all()
+            for category_model in self.category_model.objects.all().order_by(order_by)
         ]
 
     def update(self, category: Category) -> None:
