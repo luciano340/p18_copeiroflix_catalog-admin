@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from src.django_project.apps.cast_member.views import CastMemberViewSet
 from src.django_project.apps.category.views import CategoryViewSet
@@ -29,4 +29,5 @@ router.register(r'api/cast_members', CastMemberViewSet, basename="cast_member")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('django_prometheus.urls')),
 ] + router.urls
