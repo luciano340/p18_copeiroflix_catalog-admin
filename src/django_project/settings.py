@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from django.conf import settings
+import os, sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -76,13 +78,24 @@ WSGI_APPLICATION = 'src.django_project.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if any("pytest" in arg for arg in sys.argv):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': ':memory:',  # Usa o SQLite em memória para os testes
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.environ['database_name'],
+            'USER': os.environ['database_user'],
+            'PASSWORD': os.environ['database_passwd'],
+            'HOST': os.environ['database_host'],
+            'PORT': os.environ['database_port']
+        }
+    }
 
 
 # Password validation
