@@ -2,6 +2,7 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import os
 from uuid import UUID
+from src._shared.logger import get_logger
 from src.core._shared.dto import ListOuputMeta
 from src.core._shared.factory_pagination import CreateListPagination
 from src.core.genre.application.use_cases.exceptions import GenreOrderNotFound
@@ -30,11 +31,16 @@ class ResponseListGenre:
 class ListGenre():
     def __init__(self, repository: GenreRepositoryInterface) -> None:
         self.repository = repository
-    
+        self.logger = get_logger(__name__)
+        self.logger.debug(f'Iniciando instâcia {self.repository}')
+        
     def execute(self, request: RequestListGenre):
+        self.logger.info('Iniciando listagem de generos')
+        self.logger.debug(f'Argumentos {request} - {type(request)}')
         try:
             genres = self.repository.list(order_by=request.order_by)
         except FieldError:
+            self.logger.error(f'Erro na ordenação, coluna {request.order_by} não localizada')
             raise GenreOrderNotFound(f'Field {request.order_by} not found')
 
         mapped_genres = [
@@ -48,6 +54,7 @@ class ListGenre():
             ) for g in genres
         ]
         
+        self.logger.debug(f'Membros do elenco localizadas {mapped_genres}')
         genres_page = CreateListPagination.configure_pagination(
             mapped_list=mapped_genres, 
             current_page=request.current_page

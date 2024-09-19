@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_prometheus.middleware.PrometheusAfterMiddleware',
+    'src.django_project.logger_middleware.LoggingMiddleware'
 ]
 
 ROOT_URLCONF = 'src.django_project.urls'

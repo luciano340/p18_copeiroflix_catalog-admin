@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED, HTTP_204_NO_CONTENT, HTTP_400_BAD_REQUEST
+from src._shared.logger import get_logger
 from src.core.category.application.use_cases.create_category import CreateCategory, CreateCategoryRequest
 from src.core.category.application.use_cases.delete_category import DeleteCategory, DeleteCategoryRequest
 from src.core.category.application.use_cases.exceptions import CategoryNotFound, CategoryOrderNotFound
@@ -14,7 +15,9 @@ from src.django_project.apps.category.serializers import CreateCategoryRequestSe
 
 
 class CategoryViewSet(viewsets.ViewSet):
+    logger = get_logger(__name__)
     def list(self, request: Request) -> Response:
+        CategoryViewSet.logger.warning('Testando log')
         order_by = request.query_params.get("order_by", "name")
         try:
             current_page = int(request.query_params.get("current_page", 1))
