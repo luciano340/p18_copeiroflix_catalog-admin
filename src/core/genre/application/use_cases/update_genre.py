@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from uuid import UUID
+from src._shared.logger import get_logger
 from src.core.category.domain.category_repository_interface import CategoryRepositoryInterface
 from src.core.genre.application.use_cases.exceptions import GenreNotFound, RelatedCategoriesInvalid, RelatedCategoriesNotFound
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
@@ -16,11 +17,16 @@ class UpdateGenre:
     def __init__(self, repository: GenreRepositoryInterface, categoryRepository: CategoryRepositoryInterface):
         self.repository = repository
         self.category_repository = categoryRepository
-
+        self.logger = get_logger(__name__)
+        self.logger.debug(f'instância iniciada com {repository} - {type(repository)} - {categoryRepository} - {type(categoryRepository)}')
+        
     def execute(self, request: UpdateGenreRequest) -> None:
+        self.logger.info(f'Iniciando update de genero {request.id}')
+        self.logger.debug(f'Argumentos {request} - {type(request)}')
         genre = self.repository.get_by_id(request.id)
         
         if genre is None:
+            self.logger.error(f'Genero {request.id} não localizada para atualização')
             raise GenreNotFound(f"Genre with id {request.id} not found for update")
         
         if request.name is not None:
@@ -44,4 +50,6 @@ class UpdateGenre:
             else:
                 genre.deactivate()
 
-        self.repository.update(genre) 
+        self.logger.debug(f'Informações da entidade genero que serão enviadas para atualização no banco {genre}')
+        self.repository.update(genre)
+        self.logger.info(f'Atualização da genero {request.id} finalizada')

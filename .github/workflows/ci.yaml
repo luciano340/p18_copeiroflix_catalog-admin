@@ -29,6 +29,9 @@ jobs:
       - name: Configure Path
         run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
+      - name: Configure Envs
+        run: echo "LOGPATH=app.log" >> $GITHUB_ENV
+
       - name: Run test on core application
         run: pytest src/core/category/tests/application/
 

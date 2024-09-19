@@ -3,6 +3,7 @@ import os
 from uuid import UUID
 from datetime import datetime
 from django.core.exceptions import FieldError
+from src._shared.logger import get_logger
 from src.core._shared.dto import ListOuputMeta
 from src.core._shared.factory_pagination import CreateListPagination
 from src.core.category.application.use_cases.exceptions import CategoryOrderNotFound
@@ -31,11 +32,16 @@ class ListCategoryResponse:
 class ListCategory:
     def __init__(self, repository: CategoryRepositoryInterface) -> None:
         self.repository = repository
-    
+        self.logger = get_logger(__name__)
+        self.logger.debug(f'Iniciando instâcia {self.repository}')
+
     def execute(self, request: ListCategoryRequest) -> ListCategoryResponse:
+        self.logger.info('Iniciando listagem de categorias')
+        self.logger.debug(f'Argumentos {request} - {type(request)}')
         try:
             categories = self.repository.list(order_by=request.order_by)
         except FieldError:
+            self.logger.error(f'Erro na ordenação, coluna {request.order_by} não localizada')
             raise CategoryOrderNotFound(f'Field {request.order_by} not found')
         
         categories = [
@@ -49,6 +55,8 @@ class ListCategory:
             ) for category in categories
         ]
 
+        self.logger.debug(f'Categorias localizadas {categories}')
+        
         categories_page = CreateListPagination.configure_pagination(
             mapped_list=categories, 
             current_page=request.current_page

@@ -5,6 +5,7 @@ import os
 from uuid import UUID
 from django.core.exceptions import FieldError
 
+from src._shared.logger import get_logger
 from src.core._shared.dto import ListOuputMeta
 from src.core._shared.factory_pagination import CreateListPagination
 from src.core.cast_member.application.use_cases.exceptions import CastMemberOrderNotFound
@@ -33,11 +34,16 @@ class ResponseListCastMember:
 class ListCastMember():
     def __init__(self, repository: CastMemberRepositoryInterface) -> None:
         self.repository = repository
-    
+        self.logger = get_logger(__name__)
+        self.logger.debug(f'Iniciando instâcia {self.repository}')
+        
     def execute(self, request: RequestListCastMember) -> ResponseListCastMember:
+        self.logger.info('Iniciando listagem de membros do elenco')
+        self.logger.debug(f'Argumentos {request} - {type(request)}')
         try:
             CastMembers = self.repository.list(order_by=request.order_by)
         except FieldError:
+            self.logger.error(f'Erro na ordenação, coluna {request.order_by} não localizada')
             raise CastMemberOrderNotFound(f'Filed {request.order_by} not found')
         
         mapped_CastMembers = [
@@ -50,6 +56,7 @@ class ListCastMember():
             ) for cm in CastMembers
         ]
 
+        self.logger.debug(f'Membros do elenco localizadas {mapped_CastMembers}')
         castmembers_page = CreateListPagination.configure_pagination(
             mapped_list=mapped_CastMembers, 
             current_page=request.current_page

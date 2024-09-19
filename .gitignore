@@ -1,3 +1,6 @@
 **/__pycache__/
 .vscode/*
 db.sqlite3
+webapp.log
+app.log
+Dockerfile
