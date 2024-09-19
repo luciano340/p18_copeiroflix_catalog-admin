@@ -17,7 +17,7 @@ LOGGING_CONFIG = {
         },
         'file': {
             'class': 'logging.FileHandler',
-            'filename': 'app.log', 
+            'filename': os.getenv('LOGPATH', '/var/application/log/app.log'), 
             'formatter': 'default',
         },
     },

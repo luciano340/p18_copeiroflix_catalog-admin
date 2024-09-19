@@ -2110,3 +2110,739 @@ UnboundLocalError: cannot access local variable 'log_message' where it is not as
 [2024-01-02 16:19:19,000] DEBUG in update_genre: Argumentos UpdateGenreRequest(id=UUID('855aa6e3-bc95-4f99-9014-aa603d9e0e3b'), name='Terror', categories_id={UUID('131b0c95-c03c-4a04-be98-0772ee85f242'), UUID('0c49245d-200e-4598-96c9-914d5684328d')}, is_active=False) - <class 'src.core.genre.application.use_cases.update_genre.UpdateGenreRequest'>
 [2024-01-02 16:19:19,000] DEBUG in update_genre: Informações da entidade genero que serão enviadas para atualização no banco Genre(id=UUID('855aa6e3-bc95-4f99-9014-aa603d9e0e3b'), notificaiton=Notification(), name='Terror', is_active=False, created_date='2024-01-01 20:20:20', updated_date='2024-01-02 19:19:19', categories={UUID('131b0c95-c03c-4a04-be98-0772ee85f242'), UUID('0c49245d-200e-4598-96c9-914d5684328d')})
 [2024-01-02 16:19:19,000] INFO in update_genre: Atualização da genero 855aa6e3-bc95-4f99-9014-aa603d9e0e3b finalizada
+[2024-09-18 22:08:18,673] INFO in logger_middleware: Request recebido: / - api-root - GET
+[2024-09-18 22:08:18,674] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /
+  Route           : api-root
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Content-Length": "",
+  "Content-Type": "text/plain",
+  "Host": "127.0.0.1:8000",
+  "Connection": "keep-alive",
+  "Sec-Ch-Ua": "\"Chromium\";v=\"128\", \"Not;A=Brand\";v=\"24\", \"Google Chrome\";v=\"128\"",
+  "Sec-Ch-Ua-Mobile": "?0",
+  "Sec-Ch-Ua-Platform": "\"Windows\"",
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+  "Sec-Fetch-Site": "none",
+  "Sec-Fetch-Mode": "navigate",
+  "Sec-Fetch-User": "?1",
+  "Sec-Fetch-Dest": "document",
+  "Accept-Encoding": "gzip, deflate, br, zstd",
+  "Accept-Language": "pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+  "Cookie": "csrftoken=m3BRJNJLNrid6hSPCvX9kwaqcim9iEf6"
+}
+  Cookies         : {
+  "csrftoken": "m3BRJNJLNrid6hSPCvX9kwaqcim9iEf6"
+}
+  Session Data    : {}
+  Content-Type    : text/plain
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36
+  Secure          : HTTP
+[2024-09-18 22:08:18,736] INFO in logger_middleware: Response enviado: 200 para / - api-root
+[2024-09-18 22:08:19,053] WARNING in log: Not Found: /favicon.ico
+[2024-09-19 20:29:58,093] INFO in logger_middleware: Request recebido: /api/cast_members/ - cast_member-list - GET
+[2024-09-19 20:29:58,094] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/cast_members/
+  Route           : cast_member-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,094] DEBUG in list_cast_member: Iniciando instâcia <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACC8C4EC0>
+[2024-09-19 20:29:58,094] INFO in list_cast_member: Iniciando listagem de membros do elenco
+[2024-09-19 20:29:58,094] DEBUG in list_cast_member: Argumentos RequestListCastMember(order_by='name', current_page=1) - <class 'src.core.cast_member.application.use_cases.list_cast_member.RequestListCastMember'>
+[2024-09-19 20:29:58,095] DEBUG in list_cast_member: Membros do elenco localizadas [CastMemberOutput(id=UUID('eda8e416-fdf0-4fe7-b456-245b8108dbd3'), name='Julio', type='APRESENTADOR', created_date=datetime.datetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date=None), CastMemberOutput(id=UUID('e7eff507-916c-4f42-9664-4346c8a8d625'), name='Roberta', type='CONVIDADO', created_date=datetime.datetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date=None)]
+[2024-09-19 20:29:58,095] INFO in logger_middleware: Response enviado: 200 para /api/cast_members/ - cast_member-list
+[2024-09-19 20:29:58,098] INFO in logger_middleware: Request recebido: /api/cast_members/1231231231/ - cast_member-detail - GET
+[2024-09-19 20:29:58,098] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/cast_members/1231231231/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,099] INFO in logger_middleware: Response enviado: 400 para /api/cast_members/1231231231/ - cast_member-detail
+[2024-09-19 20:29:58,099] WARNING in log: Bad Request: /api/cast_members/1231231231/
+[2024-09-19 20:29:58,101] INFO in logger_middleware: Request recebido: /api/cast_members/af1773be-7930-41c4-91ed-20ce5705a502/ - cast_member-detail - GET
+[2024-09-19 20:29:58,102] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/cast_members/af1773be-7930-41c4-91ed-20ce5705a502/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,102] DEBUG in get_caster_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACC9ACCE0> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,102] INFO in get_caster_member: Iniciando busca de membro do elenco af1773be-7930-41c4-91ed-20ce5705a502
+[2024-09-19 20:29:58,102] DEBUG in get_caster_member: Argumentos GetCastMemberRequest(id=UUID('af1773be-7930-41c4-91ed-20ce5705a502')) - <class 'src.core.cast_member.application.use_cases.get_caster_member.GetCastMemberRequest'>
+[2024-09-19 20:29:58,103] INFO in get_caster_member: Membro do elenco af1773be-7930-41c4-91ed-20ce5705a502 localizado
+[2024-09-19 20:29:58,103] DEBUG in get_caster_member: Membro do Elenco af1773be-7930-41c4-91ed-20ce5705a502 localizado - Informações vindas do banco: str af1773be-7930-41c4-91ed-20ce5705a502 - Julio - APRESENTADOR - 2024-09-19 20:29:58+00:00 - None - <class 'src.core.cast_member.domain.cast_member.CastMember'>
+[2024-09-19 20:29:58,103] INFO in logger_middleware: Response enviado: 200 para /api/cast_members/af1773be-7930-41c4-91ed-20ce5705a502/ - cast_member-detail
+[2024-09-19 20:29:58,105] INFO in logger_middleware: Request recebido: /api/cast_members/1be47a46-9c43-4f93-b906-6d728eb15761/ - cast_member-detail - GET
+[2024-09-19 20:29:58,106] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/cast_members/1be47a46-9c43-4f93-b906-6d728eb15761/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,106] DEBUG in get_caster_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACC9ACD70> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,106] INFO in get_caster_member: Iniciando busca de membro do elenco 1be47a46-9c43-4f93-b906-6d728eb15761
+[2024-09-19 20:29:58,106] DEBUG in get_caster_member: Argumentos GetCastMemberRequest(id=UUID('1be47a46-9c43-4f93-b906-6d728eb15761')) - <class 'src.core.cast_member.application.use_cases.get_caster_member.GetCastMemberRequest'>
+[2024-09-19 20:29:58,106] ERROR in get_caster_member: Membro do elenco 1be47a46-9c43-4f93-b906-6d728eb15761 não localizado
+[2024-09-19 20:29:58,107] INFO in logger_middleware: Response enviado: 404 para /api/cast_members/1be47a46-9c43-4f93-b906-6d728eb15761/ - cast_member-detail
+[2024-09-19 20:29:58,107] WARNING in log: Not Found: /api/cast_members/1be47a46-9c43-4f93-b906-6d728eb15761/
+[2024-09-19 20:29:58,109] INFO in logger_middleware: Request recebido: /api/cast_members/ - cast_member-list - POST
+[2024-09-19 20:29:58,109] ERROR in logger_middleware: Erro ao logar request: You cannot access body after reading from request's data stream
+[2024-09-19 20:29:58,110] INFO in logger_middleware: Response enviado: 400 para /api/cast_members/ - cast_member-list
+[2024-09-19 20:29:58,110] WARNING in log: Bad Request: /api/cast_members/
+[2024-09-14 01:04:04,000] INFO in logger_middleware: Request recebido: /api/cast_members/ - cast_member-list - POST
+[2024-09-14 01:04:04,000] ERROR in logger_middleware: Erro ao logar request: You cannot access body after reading from request's data stream
+[2024-09-14 01:04:04,000] DEBUG in create_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA80B60> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-14 01:04:04,000] INFO in create_cast_member: Iniciando criação de membro do elenco André
+[2024-09-14 01:04:04,000] DEBUG in create_cast_member: Argumentos CreateCastMemberRequest(name='André', type=<CastMemberType.APRESENTADOR: 'APRESENTADOR'>) - <class 'src.core.cast_member.application.use_cases.create_cast_member.CreateCastMemberRequest'>
+[2024-09-14 01:04:04,000] DEBUG in create_cast_member: Dados a serem persistidos str f87ecb22-56b4-4423-956c-afd3adc730f2 - André - APRESENTADOR - 2024-09-14 04:04:04 - None
+[2024-09-14 01:04:04,000] INFO in create_cast_member: Criação do membro do elenco finalizada
+[2024-09-14 01:04:04,000] INFO in logger_middleware: Response enviado: 201 para /api/cast_members/ - cast_member-list
+[2024-09-19 20:29:58,151] INFO in logger_middleware: Request recebido: /api/cast_members/8383783749/ - cast_member-detail - PUT
+[2024-09-19 20:29:58,151] DEBUG in logger_middleware: Request Information:
+  Method          : PUT
+  Path            : /api/cast_members/8383783749/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"","type":"Repolho"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "28",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,152] INFO in logger_middleware: Response enviado: 400 para /api/cast_members/8383783749/ - cast_member-detail
+[2024-09-19 20:29:58,152] WARNING in log: Bad Request: /api/cast_members/8383783749/
+[2024-09-19 20:29:58,155] INFO in logger_middleware: Request recebido: /api/cast_members/487eb991-fba2-4c28-9491-83a04590cbb5/ - cast_member-detail - PUT
+[2024-09-19 20:29:58,155] DEBUG in logger_middleware: Request Information:
+  Method          : PUT
+  Path            : /api/cast_members/487eb991-fba2-4c28-9491-83a04590cbb5/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Roberto","type":"CONVIDADO"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "37",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,155] DEBUG in update_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA8CE60> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,155] INFO in update_cast_member: Iniciando update do membro de elenco 487eb991-fba2-4c28-9491-83a04590cbb5
+[2024-09-19 20:29:58,156] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('487eb991-fba2-4c28-9491-83a04590cbb5'), name='Roberto', type=<CastMemberType.CONVIDADO: 'CONVIDADO'>) - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,156] DEBUG in update_cast_member: Informações da entidade da membro do elenco que serão enviadas para atualização no banco str 487eb991-fba2-4c28-9491-83a04590cbb5 - Julio - APRESENTADOR - 2024-09-19 20:29:58+00:00 - None
+[2024-09-19 20:29:58,156] INFO in update_cast_member: Atualização da membro do elenco 487eb991-fba2-4c28-9491-83a04590cbb5 finalizada
+[2024-09-19 20:29:58,156] INFO in logger_middleware: Response enviado: 204 para /api/cast_members/487eb991-fba2-4c28-9491-83a04590cbb5/ - cast_member-detail
+[2024-09-19 20:29:58,159] INFO in logger_middleware: Request recebido: /api/cast_members/29fb23d7-1504-4ade-8592-b356a4474a5e/ - cast_member-detail - PUT
+[2024-09-19 20:29:58,159] DEBUG in logger_middleware: Request Information:
+  Method          : PUT
+  Path            : /api/cast_members/29fb23d7-1504-4ade-8592-b356a4474a5e/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Julio","type":"CONVIDADO"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "35",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,160] DEBUG in update_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA83230> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,160] INFO in update_cast_member: Iniciando update do membro de elenco 29fb23d7-1504-4ade-8592-b356a4474a5e
+[2024-09-19 20:29:58,160] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('29fb23d7-1504-4ade-8592-b356a4474a5e'), name='Julio', type=<CastMemberType.CONVIDADO: 'CONVIDADO'>) - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,160] ERROR in update_cast_member: Categoria 29fb23d7-1504-4ade-8592-b356a4474a5e não localizada para atualização
+[2024-09-19 20:29:58,160] INFO in logger_middleware: Response enviado: 404 para /api/cast_members/29fb23d7-1504-4ade-8592-b356a4474a5e/ - cast_member-detail
+[2024-09-19 20:29:58,160] WARNING in log: Not Found: /api/cast_members/29fb23d7-1504-4ade-8592-b356a4474a5e/
+[2024-09-19 20:29:58,163] INFO in logger_middleware: Request recebido: /api/cast_members/8383783749/ - cast_member-detail - DELETE
+[2024-09-19 20:29:58,163] DEBUG in logger_middleware: Request Information:
+  Method          : DELETE
+  Path            : /api/cast_members/8383783749/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": ""
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : 
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,163] INFO in logger_middleware: Response enviado: 400 para /api/cast_members/8383783749/ - cast_member-detail
+[2024-09-19 20:29:58,163] WARNING in log: Bad Request: /api/cast_members/8383783749/
+[2024-09-19 20:29:58,165] INFO in logger_middleware: Request recebido: /api/cast_members/8e66b6a8-f677-486e-b0dc-ad3c7c76f791/ - cast_member-detail - DELETE
+[2024-09-19 20:29:58,165] DEBUG in logger_middleware: Request Information:
+  Method          : DELETE
+  Path            : /api/cast_members/8e66b6a8-f677-486e-b0dc-ad3c7c76f791/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": ""
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : 
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,166] DEBUG in delete_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA44B60> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,166] INFO in delete_cast_member: Iniciando deleção de membro do elenco 8e66b6a8-f677-486e-b0dc-ad3c7c76f791
+[2024-09-19 20:29:58,166] DEBUG in delete_cast_member: Argumentos DeleteCastMemberRequest(id=UUID('8e66b6a8-f677-486e-b0dc-ad3c7c76f791')) - <class 'src.core.cast_member.application.use_cases.delete_cast_member.DeleteCastMemberRequest'>
+[2024-09-19 20:29:58,166] ERROR in delete_cast_member: Não foi possível localizar o membro do elenco 8e66b6a8-f677-486e-b0dc-ad3c7c76f791 para deleção
+[2024-09-19 20:29:58,166] INFO in logger_middleware: Response enviado: 404 para /api/cast_members/8e66b6a8-f677-486e-b0dc-ad3c7c76f791/ - cast_member-detail
+[2024-09-19 20:29:58,167] WARNING in log: Not Found: /api/cast_members/8e66b6a8-f677-486e-b0dc-ad3c7c76f791/
+[2024-09-19 20:29:58,169] INFO in logger_middleware: Request recebido: /api/cast_members/1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d/ - cast_member-detail - DELETE
+[2024-09-19 20:29:58,169] DEBUG in logger_middleware: Request Information:
+  Method          : DELETE
+  Path            : /api/cast_members/1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": ""
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : 
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,170] DEBUG in delete_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA8E1B0> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,170] INFO in delete_cast_member: Iniciando deleção de membro do elenco 1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d
+[2024-09-19 20:29:58,170] DEBUG in delete_cast_member: Argumentos DeleteCastMemberRequest(id=UUID('1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d')) - <class 'src.core.cast_member.application.use_cases.delete_cast_member.DeleteCastMemberRequest'>
+[2024-09-19 20:29:58,171] INFO in delete_cast_member: Membro do elenco 1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d deletado
+[2024-09-19 20:29:58,171] INFO in logger_middleware: Response enviado: 204 para /api/cast_members/1b10f5fd-3c2e-4f5b-8f29-e833b60beb8d/ - cast_member-detail
+[2024-09-19 20:29:58,173] INFO in logger_middleware: Request recebido: /api/cast_members/25f15065-4ca9-4954-93ac-f07ed24481f9/ - cast_member-detail - PATCH
+[2024-09-19 20:29:58,173] DEBUG in logger_middleware: Request Information:
+  Method          : PATCH
+  Path            : /api/cast_members/25f15065-4ca9-4954-93ac-f07ed24481f9/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"","type":"APRESENTADOR"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "33",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,174] INFO in logger_middleware: Response enviado: 400 para /api/cast_members/25f15065-4ca9-4954-93ac-f07ed24481f9/ - cast_member-detail
+[2024-09-19 20:29:58,174] WARNING in log: Bad Request: /api/cast_members/25f15065-4ca9-4954-93ac-f07ed24481f9/
+[2024-09-01 00:03:03,000] INFO in logger_middleware: Request recebido: /api/cast_members/495c3d9e-0654-49f6-b831-f37d715e53ec/ - cast_member-detail - PATCH
+[2024-09-01 00:03:03,000] DEBUG in logger_middleware: Request Information:
+  Method          : PATCH
+  Path            : /api/cast_members/495c3d9e-0654-49f6-b831-f37d715e53ec/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"type":"CONVIDADO"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "20",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-01 00:03:03,000] DEBUG in update_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACCA8E390> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-01 00:03:03,000] INFO in update_cast_member: Iniciando update do membro de elenco 495c3d9e-0654-49f6-b831-f37d715e53ec
+[2024-09-01 00:03:03,000] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('495c3d9e-0654-49f6-b831-f37d715e53ec'), name=None, type=<CastMemberType.CONVIDADO: 'CONVIDADO'>) - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-01 00:03:03,000] DEBUG in update_cast_member: Informações da entidade da membro do elenco que serão enviadas para atualização no banco str 495c3d9e-0654-49f6-b831-f37d715e53ec - Julio - APRESENTADOR - 2024-09-19 20:29:58+00:00 - None
+[2024-09-01 00:03:03,000] INFO in update_cast_member: Atualização da membro do elenco 495c3d9e-0654-49f6-b831-f37d715e53ec finalizada
+[2024-09-01 00:03:03,000] INFO in logger_middleware: Response enviado: 204 para /api/cast_members/495c3d9e-0654-49f6-b831-f37d715e53ec/ - cast_member-detail
+[2024-09-19 20:29:58,187] INFO in logger_middleware: Request recebido: /api/cast_members/c7ce4beb-2828-4f55-8406-9eb73cbdbfba/ - cast_member-detail - PATCH
+[2024-09-19 20:29:58,187] DEBUG in logger_middleware: Request Information:
+  Method          : PATCH
+  Path            : /api/cast_members/c7ce4beb-2828-4f55-8406-9eb73cbdbfba/
+  Route           : cast_member-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Julio","type":"CONVIDADO"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "35",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,188] DEBUG in update_cast_member: instância iniciada com <src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository object at 0x0000021ACC9ACAD0> - <class 'src.django_project.apps.cast_member.repository.DjangoORMCastMemberRepository'>
+[2024-09-19 20:29:58,188] INFO in update_cast_member: Iniciando update do membro de elenco c7ce4beb-2828-4f55-8406-9eb73cbdbfba
+[2024-09-19 20:29:58,188] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('c7ce4beb-2828-4f55-8406-9eb73cbdbfba'), name='Julio', type=<CastMemberType.CONVIDADO: 'CONVIDADO'>) - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,189] ERROR in update_cast_member: Categoria c7ce4beb-2828-4f55-8406-9eb73cbdbfba não localizada para atualização
+[2024-09-19 20:29:58,189] INFO in logger_middleware: Response enviado: 404 para /api/cast_members/c7ce4beb-2828-4f55-8406-9eb73cbdbfba/ - cast_member-detail
+[2024-09-19 20:29:58,189] WARNING in log: Not Found: /api/cast_members/c7ce4beb-2828-4f55-8406-9eb73cbdbfba/
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/ - category-list - GET
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/categories/
+  Route           : category-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in list_category: Iniciando instâcia <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCA8FB30>
+[2024-08-30 03:06:06,000] INFO in list_category: Iniciando listagem de categorias
+[2024-08-30 03:06:06,000] DEBUG in list_category: Argumentos ListCategoryRequest(order_by='name', current_page=1) - <class 'src.core.category.application.use_cases.list_category.ListCategoryRequest'>
+[2024-08-30 03:06:06,000] DEBUG in list_category: Categorias localizadas []
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 200 para /api/categories/ - category-list
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/ - category-list - POST
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : POST
+  Path            : /api/categories/
+  Route           : category-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Filme","description":"Filmes muito loucos"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "52",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in create_category: instância iniciada com <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACC9AD040> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-08-30 03:06:06,000] INFO in create_category: Iniciando criação de categoria Filme
+[2024-08-30 03:06:06,000] DEBUG in create_category: Argumentos CreateCategoryRequest(name='Filme', description='Filmes muito loucos', is_active=True) - <class 'src.core.category.application.use_cases.create_category.CreateCategoryRequest'>
+[2024-08-30 03:06:06,000] DEBUG in create_category: Informaçoes persistidas str b970be6d-e224-49b4-bed8-1d46579c4f8c - Filme - Filmes muito loucos - True - 2024-08-30 06:06:06 - None - <class 'src.core.category.domain.category.Category'>
+[2024-08-30 03:06:06,000] INFO in create_category: Criação da categoria Filme finalizada
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 201 para /api/categories/ - category-list
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/ - category-list - GET
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/categories/
+  Route           : category-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in list_category: Iniciando instâcia <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAB1BE0>
+[2024-08-30 03:06:06,000] INFO in list_category: Iniciando listagem de categorias
+[2024-08-30 03:06:06,000] DEBUG in list_category: Argumentos ListCategoryRequest(order_by='name', current_page=1) - <class 'src.core.category.application.use_cases.list_category.ListCategoryRequest'>
+[2024-08-30 03:06:06,000] DEBUG in list_category: Categorias localizadas [CategoryOutput(id=UUID('b970be6d-e224-49b4-bed8-1d46579c4f8c'), name='Filme', description='Filmes muito loucos', is_active=True, created_date=FakeDatetime(2024, 8, 30, 6, 6, 6, tzinfo=datetime.timezone.utc), updated_date=None)]
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 200 para /api/categories/ - category-list
+[2024-09-01 00:03:03,000] INFO in logger_middleware: Request recebido: /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail - PUT
+[2024-09-01 00:03:03,000] DEBUG in logger_middleware: Request Information:
+  Method          : PUT
+  Path            : /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/
+  Route           : category-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Serie","description":"Series em serie kkkk","is_active":"False"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "73",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-01 00:03:03,000] DEBUG in update_category: instância iniciada com <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCA839E0> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-09-01 00:03:03,000] INFO in update_category: Iniciando update de categoria b970be6d-e224-49b4-bed8-1d46579c4f8c
+[2024-09-01 00:03:03,000] DEBUG in update_category: Argumentos UpdateCategoryRequest(id=UUID('b970be6d-e224-49b4-bed8-1d46579c4f8c'), name='Serie', description='Series em serie kkkk', is_active=False) - <class 'src.core.category.application.use_cases.update_category.UpdateCategoryRequest'>
+[2024-09-01 00:03:03,000] DEBUG in update_category: Informações da entidade da categoria que serão enviadas para atualização no banco str b970be6d-e224-49b4-bed8-1d46579c4f8c - Filme - Filmes muito loucos - False - 2024-08-30 06:06:06+00:00 - 2024-09-01 03:03:03
+[2024-09-01 00:03:03,000] INFO in update_category: Atualização da categoria b970be6d-e224-49b4-bed8-1d46579c4f8c finalizada
+[2024-09-01 00:03:03,000] INFO in logger_middleware: Response enviado: 204 para /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail - GET
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/
+  Route           : category-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in get_category: instância iniciada com <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAC6090> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-08-30 03:06:06,000] INFO in get_category: Iniciando procura por categoria b970be6d-e224-49b4-bed8-1d46579c4f8c
+[2024-08-30 03:06:06,000] DEBUG in get_category: Argumentos GetCategoryRequest(id=UUID('b970be6d-e224-49b4-bed8-1d46579c4f8c')) - <class 'src.core.category.application.use_cases.get_category.GetCategoryRequest'>
+[2024-08-30 03:06:06,000] INFO in get_category: Categoria b970be6d-e224-49b4-bed8-1d46579c4f8c localizada
+[2024-08-30 03:06:06,000] DEBUG in get_category: Categoria b970be6d-e224-49b4-bed8-1d46579c4f8c localizada - Informações vindas do banco: str b970be6d-e224-49b4-bed8-1d46579c4f8c - Serie - Series em serie kkkk - False - 2024-08-30 06:06:06+00:00 - 2024-09-01 03:03:03+00:00 - <class 'src.core.category.domain.category.Category'>
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 200 para /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail - DELETE
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : DELETE
+  Path            : /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/
+  Route           : category-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": ""
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : 
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in delete_category: instância iniciada com <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAC4B60> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-08-30 03:06:06,000] INFO in delete_category: Iniciando deleção de categoria b970be6d-e224-49b4-bed8-1d46579c4f8c
+[2024-08-30 03:06:06,000] DEBUG in delete_category: Argumentos DeleteCategoryRequest(id=UUID('b970be6d-e224-49b4-bed8-1d46579c4f8c')) - <class 'src.core.category.application.use_cases.delete_category.DeleteCategoryRequest'>
+[2024-08-30 03:06:06,000] INFO in delete_category: Categoria b970be6d-e224-49b4-bed8-1d46579c4f8c deletada com sucesso!
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 204 para /api/categories/b970be6d-e224-49b4-bed8-1d46579c4f8c/ - category-detail
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Request recebido: /api/categories/ - category-list - GET
+[2024-08-30 03:06:06,000] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/categories/
+  Route           : category-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-08-30 03:06:06,000] DEBUG in list_category: Iniciando instâcia <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAD89B0>
+[2024-08-30 03:06:06,000] INFO in list_category: Iniciando listagem de categorias
+[2024-08-30 03:06:06,000] DEBUG in list_category: Argumentos ListCategoryRequest(order_by='name', current_page=1) - <class 'src.core.category.application.use_cases.list_category.ListCategoryRequest'>
+[2024-08-30 03:06:06,000] DEBUG in list_category: Categorias localizadas []
+[2024-08-30 03:06:06,000] INFO in logger_middleware: Response enviado: 200 para /api/categories/ - category-list
+[2024-09-19 20:29:58,218] INFO in logger_middleware: Request recebido: /api/genres/ - genre-list - GET
+[2024-09-19 20:29:58,218] DEBUG in logger_middleware: Request Information:
+  Method          : GET
+  Path            : /api/genres/
+  Route           : genre-list
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": "",
+  "Content-Type": "application/octet-stream"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/octet-stream
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,219] DEBUG in list_genre: Iniciando instâcia <src.django_project.apps.genre.repository.DjangoORMGenreRepository object at 0x0000021ACCAC51C0>
+[2024-09-19 20:29:58,219] INFO in list_genre: Iniciando listagem de generos
+[2024-09-19 20:29:58,219] DEBUG in list_genre: Argumentos RequestListGenre(order_by='name', current_page=1) - <class 'src.core.genre.application.use_cases.list_genre.RequestListGenre'>
+[2024-09-19 20:29:58,220] DEBUG in list_genre: Membros do elenco localizadas [GenreOutput(id=UUID('e0e4e183-9438-4b61-85aa-76e8f8180ad6'), name='Drama', is_active=True, categories_id=set(), created_date=datetime.datetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date=None), GenreOutput(id=UUID('e265390a-36e6-43ea-9ba2-1bf5022eb3ee'), name='Terror', is_active=True, categories_id={UUID('a488bfb2-db49-4584-9cb1-99a9ecf8588d'), UUID('4355de03-c430-4e7e-af3b-a26909a6b021')}, created_date=datetime.datetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date=None)]
+[2024-09-19 20:29:58,221] INFO in logger_middleware: Response enviado: 200 para /api/genres/ - genre-list
+[2024-09-06 04:24:00,000] INFO in logger_middleware: Request recebido: /api/genres/ - genre-list - POST
+[2024-09-06 04:24:00,000] ERROR in logger_middleware: Erro ao logar request: You cannot access body after reading from request's data stream
+[2024-09-06 04:24:00,000] DEBUG in create_genre: instância iniciada com <src.django_project.apps.genre.repository.DjangoORMGenreRepository object at 0x0000021ACCAD93A0> - <class 'src.django_project.apps.genre.repository.DjangoORMGenreRepository'> - <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAD9430> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-09-06 04:24:00,000] INFO in create_genre: Iniciando de genero Terror
+[2024-09-06 04:24:00,000] DEBUG in create_genre: Argumentos CreateGenreRequest(name='Terror', categories_id={UUID('2d726509-18d2-4a58-8c86-8441b4554f74'), UUID('671ac59b-6b70-4b8c-81f2-f4776f44982a')}, is_active=True) - <class 'src.core.genre.application.use_cases.create_genre.CreateGenreRequest'>
+[2024-09-06 04:24:00,000] DEBUG in create_genre: Dados a serem persistidos Genre(id=UUID('2ea9fc7f-382d-45dd-a901-dd28091c7238'), notificaiton=Notification(), name='Terror', is_active=True, created_date='2024-09-06 07:24:00', updated_date=None, categories={UUID('2d726509-18d2-4a58-8c86-8441b4554f74'), UUID('671ac59b-6b70-4b8c-81f2-f4776f44982a')})
+[2024-09-06 04:24:00,000] INFO in create_genre: Criação do genero finalizada
+[2024-09-06 04:24:00,000] INFO in logger_middleware: Response enviado: 201 para /api/genres/ - genre-list
+[2024-09-19 20:29:58,238] INFO in logger_middleware: Request recebido: /api/genres/f3697996-c295-417c-b9e2-4319857a6191/ - genre-detail - DELETE
+[2024-09-19 20:29:58,238] DEBUG in logger_middleware: Request Information:
+  Method          : DELETE
+  Path            : /api/genres/f3697996-c295-417c-b9e2-4319857a6191/
+  Route           : genre-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : None
+  Headers         : {
+  "Cookie": ""
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : 
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-19 20:29:58,238] DEBUG in delete_genre: instância iniciada com <src.django_project.apps.genre.repository.DjangoORMGenreRepository object at 0x0000021ACCAF4920> - <class 'src.django_project.apps.genre.repository.DjangoORMGenreRepository'>
+[2024-09-19 20:29:58,238] INFO in delete_genre: Iniciando deleção do genero f3697996-c295-417c-b9e2-4319857a6191
+[2024-09-19 20:29:58,238] DEBUG in delete_genre: Argumentos DeleteGenreRequest(id=UUID('f3697996-c295-417c-b9e2-4319857a6191')) - <class 'src.core.genre.application.use_cases.delete_genre.DeleteGenreRequest'>
+[2024-09-19 20:29:58,240] INFO in delete_genre: Membro do elenco f3697996-c295-417c-b9e2-4319857a6191 deletado
+[2024-09-19 20:29:58,240] INFO in logger_middleware: Response enviado: 204 para /api/genres/f3697996-c295-417c-b9e2-4319857a6191/ - genre-detail
+[2024-09-09 20:23:23,000] INFO in logger_middleware: Request recebido: /api/genres/ebe57ba4-0aff-4115-ab4d-489a712d6681/ - genre-detail - PUT
+[2024-09-09 20:23:23,000] DEBUG in logger_middleware: Request Information:
+  Method          : PUT
+  Path            : /api/genres/ebe57ba4-0aff-4115-ab4d-489a712d6681/
+  Route           : genre-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Atualizado","is_active":"False","categories_id":["42ac5057-d2d1-4de7-ac74-2cfc56bc3c52","e4963b47-a511-4198-b9d4-9bddbbd30530"]}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "137",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-09 20:23:23,000] DEBUG in update_genre: instância iniciada com <src.django_project.apps.genre.repository.DjangoORMGenreRepository object at 0x0000021ACCAF5F70> - <class 'src.django_project.apps.genre.repository.DjangoORMGenreRepository'> - <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAF6000> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-09-09 20:23:23,000] INFO in update_genre: Iniciando update de genero ebe57ba4-0aff-4115-ab4d-489a712d6681
+[2024-09-09 20:23:23,000] DEBUG in update_genre: Argumentos UpdateGenreRequest(id=UUID('ebe57ba4-0aff-4115-ab4d-489a712d6681'), name='Atualizado', categories_id={UUID('42ac5057-d2d1-4de7-ac74-2cfc56bc3c52'), UUID('e4963b47-a511-4198-b9d4-9bddbbd30530')}, is_active=False) - <class 'src.core.genre.application.use_cases.update_genre.UpdateGenreRequest'>
+[2024-09-09 20:23:23,000] DEBUG in update_genre: Informações da entidade genero que serão enviadas para atualização no banco Genre(id=UUID('ebe57ba4-0aff-4115-ab4d-489a712d6681'), notificaiton=Notification(), name='Atualizado', is_active=False, created_date=FakeDatetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date='2024-09-09 23:23:23', categories={UUID('42ac5057-d2d1-4de7-ac74-2cfc56bc3c52'), UUID('e4963b47-a511-4198-b9d4-9bddbbd30530')})
+[2024-09-09 20:23:23,000] INFO in update_genre: Atualização da genero ebe57ba4-0aff-4115-ab4d-489a712d6681 finalizada
+[2024-09-09 20:23:23,000] INFO in logger_middleware: Response enviado: 204 para /api/genres/ebe57ba4-0aff-4115-ab4d-489a712d6681/ - genre-detail
+[2024-09-09 17:23:23,000] INFO in logger_middleware: Request recebido: /api/genres/5c1339d3-2080-423f-8a54-0182aaf43ade/ - genre-detail - PATCH
+[2024-09-09 17:23:23,000] DEBUG in logger_middleware: Request Information:
+  Method          : PATCH
+  Path            : /api/genres/5c1339d3-2080-423f-8a54-0182aaf43ade/
+  Route           : genre-detail
+  Query Params    : {}
+  Body Params     : {}
+  Request Body    : {"name":"Atualizado"}
+  Headers         : {
+  "Cookie": "",
+  "Content-Length": "21",
+  "Content-Type": "application/json"
+}
+  Cookies         : {}
+  Session Data    : {}
+  Content-Type    : application/json
+  Encoding        : None
+  Client IP       : 127.0.0.1
+  User-Agent      : None
+  Secure          : HTTP
+[2024-09-09 17:23:23,000] DEBUG in update_genre: instância iniciada com <src.django_project.apps.genre.repository.DjangoORMGenreRepository object at 0x0000021ACCAD9070> - <class 'src.django_project.apps.genre.repository.DjangoORMGenreRepository'> - <src.django_project.apps.category.repository.DjangoORMCategoryRepository object at 0x0000021ACCAD8FB0> - <class 'src.django_project.apps.category.repository.DjangoORMCategoryRepository'>
+[2024-09-09 17:23:23,000] INFO in update_genre: Iniciando update de genero 5c1339d3-2080-423f-8a54-0182aaf43ade
+[2024-09-09 17:23:23,000] DEBUG in update_genre: Argumentos UpdateGenreRequest(id=UUID('5c1339d3-2080-423f-8a54-0182aaf43ade'), name='Atualizado', categories_id=None, is_active=None) - <class 'src.core.genre.application.use_cases.update_genre.UpdateGenreRequest'>
+[2024-09-09 17:23:23,000] DEBUG in update_genre: Informações da entidade genero que serão enviadas para atualização no banco Genre(id=UUID('5c1339d3-2080-423f-8a54-0182aaf43ade'), notificaiton=Notification(), name='Atualizado', is_active=True, created_date=FakeDatetime(2024, 9, 19, 20, 29, 58, tzinfo=datetime.timezone.utc), updated_date='2024-09-09 20:23:23', categories=set())
+[2024-09-09 17:23:23,000] INFO in update_genre: Atualização da genero 5c1339d3-2080-423f-8a54-0182aaf43ade finalizada
+[2024-09-09 17:23:23,000] INFO in logger_middleware: Response enviado: 204 para /api/genres/5c1339d3-2080-423f-8a54-0182aaf43ade/ - genre-detail
+[2024-09-19 20:29:58,270] DEBUG in create_cast_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC4E00> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,271] INFO in create_cast_member: Iniciando criação de membro do elenco Marlon
+[2024-09-19 20:29:58,271] DEBUG in create_cast_member: Argumentos CreateCastMemberRequest(name='Marlon', type='APRESENTADOR') - <class 'src.core.cast_member.application.use_cases.create_cast_member.CreateCastMemberRequest'>
+[2024-09-19 20:29:58,271] DEBUG in create_cast_member: Dados a serem persistidos str 7ef0882b-c631-4e52-93d1-8eaa42ca7cbc - Marlon - APRESENTADOR - 2024-09-19 20:29:58 - None
+[2024-09-19 20:29:58,271] INFO in create_cast_member: Criação do membro do elenco finalizada
+[2024-09-19 20:29:58,272] DEBUG in delete_cast_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC7FE0> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,272] INFO in delete_cast_member: Iniciando deleção de membro do elenco 064342e6-f05f-4ff5-9748-d7b24502075a
+[2024-09-19 20:29:58,272] DEBUG in delete_cast_member: Argumentos DeleteCastMemberRequest(id=UUID('064342e6-f05f-4ff5-9748-d7b24502075a')) - <class 'src.core.cast_member.application.use_cases.delete_cast_member.DeleteCastMemberRequest'>
+[2024-09-19 20:29:58,272] INFO in delete_cast_member: Membro do elenco 064342e6-f05f-4ff5-9748-d7b24502075a deletado
+[2024-09-19 20:29:58,279] DEBUG in get_caster_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC5370> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,280] INFO in get_caster_member: Iniciando busca de membro do elenco 31d998c4-2f53-4e47-85bf-9211da7f6f95
+[2024-09-19 20:29:58,280] DEBUG in get_caster_member: Argumentos GetCastMemberRequest(id=UUID('31d998c4-2f53-4e47-85bf-9211da7f6f95')) - <class 'src.core.cast_member.application.use_cases.get_caster_member.GetCastMemberRequest'>
+[2024-09-19 20:29:58,280] INFO in get_caster_member: Membro do elenco 31d998c4-2f53-4e47-85bf-9211da7f6f95 localizado
+[2024-09-19 20:29:58,280] DEBUG in get_caster_member: Membro do Elenco 31d998c4-2f53-4e47-85bf-9211da7f6f95 localizado - Informações vindas do banco: str 31d998c4-2f53-4e47-85bf-9211da7f6f95 - Cassio - CONVIDADO - 2020-01-01 00:00:00 - None - <class 'src.core.cast_member.domain.cast_member.CastMember'>
+[2024-09-19 20:29:58,287] DEBUG in get_caster_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC52B0> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,287] INFO in get_caster_member: Iniciando busca de membro do elenco a91ba3ea-3767-4b10-a8e8-c97ca4758726
+[2024-09-19 20:29:58,287] DEBUG in get_caster_member: Argumentos GetCastMemberRequest(id=UUID('a91ba3ea-3767-4b10-a8e8-c97ca4758726')) - <class 'src.core.cast_member.application.use_cases.get_caster_member.GetCastMemberRequest'>
+[2024-09-19 20:29:58,287] ERROR in get_caster_member: Membro do elenco a91ba3ea-3767-4b10-a8e8-c97ca4758726 não localizado
+[2024-09-19 20:29:58,289] DEBUG in list_cast_member: Iniciando instâcia <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC7DA0>
+[2024-09-19 20:29:58,289] INFO in list_cast_member: Iniciando listagem de membros do elenco
+[2024-09-19 20:29:58,289] DEBUG in list_cast_member: Argumentos RequestListCastMember(order_by='name', current_page=1) - <class 'src.core.cast_member.application.use_cases.list_cast_member.RequestListCastMember'>
+[2024-09-19 20:29:58,289] DEBUG in list_cast_member: Membros do elenco localizadas []
+[2024-09-19 20:29:58,290] DEBUG in list_cast_member: Iniciando instâcia <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC73B0>
+[2024-09-19 20:29:58,291] INFO in list_cast_member: Iniciando listagem de membros do elenco
+[2024-09-19 20:29:58,291] DEBUG in list_cast_member: Argumentos RequestListCastMember(order_by='name', current_page=1) - <class 'src.core.cast_member.application.use_cases.list_cast_member.RequestListCastMember'>
+[2024-09-19 20:29:58,291] DEBUG in list_cast_member: Membros do elenco localizadas [CastMemberOutput(id=UUID('1a219d4d-359a-4a54-867f-9aeda3783d92'), name='Fernando', type='APRESENTADOR', created_date='2024-09-19 20:29:58', updated_date=None), CastMemberOutput(id=UUID('45ecd940-b825-4a1b-b517-f7f5c00743e2'), name='Francisco', type='CONVIDADO', created_date='2024-09-19 20:29:58', updated_date=None)]
+[2024-09-19 20:29:58,292] DEBUG in update_cast_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC4DD0> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,292] INFO in update_cast_member: Iniciando update do membro de elenco 6649988c-bf0b-43e1-9c73-ea06a18d6bd5
+[2024-09-19 20:29:58,292] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('6649988c-bf0b-43e1-9c73-ea06a18d6bd5'), name='Luke', type='APRESENTADOR') - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,292] DEBUG in update_cast_member: Informações da entidade da membro do elenco que serão enviadas para atualização no banco str 6649988c-bf0b-43e1-9c73-ea06a18d6bd5 - Charlie - CONVIDADO - 2024-09-19 20:29:58 - None
+[2024-09-19 20:29:58,292] INFO in update_cast_member: Atualização da membro do elenco 6649988c-bf0b-43e1-9c73-ea06a18d6bd5 finalizada
+[2024-09-19 20:29:58,294] DEBUG in update_cast_member: instância iniciada com <src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository object at 0x0000021ACCAC4C80> - <class 'src.core.cast_member.infra.in_memory_cast_member_repository.InMemoryCastMemberRepository'>
+[2024-09-19 20:29:58,294] INFO in update_cast_member: Iniciando update do membro de elenco df4eae6a-8d09-478a-9566-60ae316c69da
+[2024-09-19 20:29:58,294] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('df4eae6a-8d09-478a-9566-60ae316c69da'), name='Richard', type=None) - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,294] ERROR in update_cast_member: Categoria df4eae6a-8d09-478a-9566-60ae316c69da não localizada para atualização
+[2024-09-19 20:29:58,296] DEBUG in create_cast_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314126258016'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,296] INFO in create_cast_member: Iniciando criação de membro do elenco Roberto
+[2024-09-19 20:29:58,296] DEBUG in create_cast_member: Argumentos CreateCastMemberRequest(name='Roberto', type='CONVIDADO') - <class 'src.core.cast_member.application.use_cases.create_cast_member.CreateCastMemberRequest'>
+[2024-09-19 20:29:58,322] DEBUG in create_cast_member: Dados a serem persistidos str 19c4e598-3158-4a4a-81e2-09880c74930e - Roberto - CONVIDADO - 2024-09-19 20:29:58 - None
+[2024-09-19 20:29:58,322] INFO in create_cast_member: Criação do membro do elenco finalizada
+[2024-09-19 20:29:58,323] DEBUG in create_cast_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314126329184'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,324] INFO in create_cast_member: Iniciando criação de membro do elenco 
+[2024-09-19 20:29:58,324] DEBUG in create_cast_member: Argumentos CreateCastMemberRequest(name='', type=None) - <class 'src.core.cast_member.application.use_cases.create_cast_member.CreateCastMemberRequest'>
+[2024-09-19 20:29:58,324] ERROR in create_cast_member: Os argumentos repassados são inválidos name cannot be empty,type must be one of [<CastMemberType.CONVIDADO: 'CONVIDADO'>, <CastMemberType.APRESENTADOR: 'APRESENTADOR'>],type cannot be empty
+[2024-09-19 20:29:58,330] DEBUG in delete_cast_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314126342624'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,330] INFO in delete_cast_member: Iniciando deleção de membro do elenco 774efad4-733b-4e51-aa77-66b199755e99
+[2024-09-19 20:29:58,330] DEBUG in delete_cast_member: Argumentos DeleteCastMemberRequest(id=UUID('774efad4-733b-4e51-aa77-66b199755e99')) - <class 'src.core.cast_member.application.use_cases.delete_cast_member.DeleteCastMemberRequest'>
+[2024-09-19 20:29:58,330] INFO in delete_cast_member: Membro do elenco 774efad4-733b-4e51-aa77-66b199755e99 deletado
+[2024-09-19 20:29:58,337] DEBUG in delete_cast_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314126341184'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,337] INFO in delete_cast_member: Iniciando deleção de membro do elenco 510f45e2-1dfb-4503-b82d-09d206cd01ff
+[2024-09-19 20:29:58,337] DEBUG in delete_cast_member: Argumentos DeleteCastMemberRequest(id=UUID('510f45e2-1dfb-4503-b82d-09d206cd01ff')) - <class 'src.core.cast_member.application.use_cases.delete_cast_member.DeleteCastMemberRequest'>
+[2024-09-19 20:29:58,337] ERROR in delete_cast_member: Não foi possível localizar o membro do elenco 510f45e2-1dfb-4503-b82d-09d206cd01ff para deleção
+[2024-09-19 20:29:58,350] DEBUG in get_caster_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314086605760'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,350] INFO in get_caster_member: Iniciando busca de membro do elenco 035aecd1-a588-4171-8975-172000aab4ff
+[2024-09-19 20:29:58,350] DEBUG in get_caster_member: Argumentos GetCastMemberRequest(id=UUID('035aecd1-a588-4171-8975-172000aab4ff')) - <class 'src.core.cast_member.application.use_cases.get_caster_member.GetCastMemberRequest'>
+[2024-09-19 20:29:58,350] INFO in get_caster_member: Membro do elenco 035aecd1-a588-4171-8975-172000aab4ff localizado
+[2024-09-19 20:29:58,350] DEBUG in get_caster_member: Membro do Elenco 035aecd1-a588-4171-8975-172000aab4ff localizado - Informações vindas do banco: str 035aecd1-a588-4171-8975-172000aab4ff - Larissa - APRESENTADOR - 2010-07-07 20:20:20 - None - <class 'src.core.cast_member.domain.cast_member.CastMember'>
+[2024-09-19 20:29:58,356] DEBUG in list_cast_member: Iniciando instâcia <MagicMock spec='CastMemberRepositoryInterface' id='2314126618032'>
+[2024-09-19 20:29:58,356] INFO in list_cast_member: Iniciando listagem de membros do elenco
+[2024-09-19 20:29:58,356] DEBUG in list_cast_member: Argumentos RequestListCastMember(order_by='name', current_page=1) - <class 'src.core.cast_member.application.use_cases.list_cast_member.RequestListCastMember'>
+[2024-09-19 20:29:58,356] DEBUG in list_cast_member: Membros do elenco localizadas []
+[2024-09-19 20:29:58,362] DEBUG in list_cast_member: Iniciando instâcia <MagicMock spec='CastMemberRepositoryInterface' id='2314126718880'>
+[2024-09-19 20:29:58,362] INFO in list_cast_member: Iniciando listagem de membros do elenco
+[2024-09-19 20:29:58,362] DEBUG in list_cast_member: Argumentos RequestListCastMember(order_by='name', current_page=1) - <class 'src.core.cast_member.application.use_cases.list_cast_member.RequestListCastMember'>
+[2024-09-19 20:29:58,362] DEBUG in list_cast_member: Membros do elenco localizadas [CastMemberOutput(id=UUID('d5e5d098-2ec6-41a6-b8bb-9a4a820ab285'), name='Ronaldo', type='CONVIDADO', created_date='2024-09-19 20:29:58', updated_date=None), CastMemberOutput(id=UUID('2ef7695a-2680-408a-8583-ec6e10eb5b14'), name='Robson', type='CONVIDADO', created_date='2024-09-19 20:29:58', updated_date=None)]
+[2024-09-19 20:29:58,369] DEBUG in update_cast_member: instância iniciada com <MagicMock spec='CastMemberRepositoryInterface' id='2314126853184'> - <class 'unittest.mock.MagicMock'>
+[2024-09-19 20:29:58,370] INFO in update_cast_member: Iniciando update do membro de elenco 79942a7a-de77-4e8f-af5b-893d973c38da
+[2024-09-19 20:29:58,370] DEBUG in update_cast_member: Argumentos UpdateCastMemberRequest(id=UUID('79942a7a-de77-4e8f-af5b-893d973c38da'), name='Rapahael', type='APRESENTADOR') - <class 'src.core.cast_member.application.use_cases.update_cast_member.UpdateCastMemberRequest'>
+[2024-09-19 20:29:58,370] DEBUG in update_cast_member: Informações da entidade da membro do elenco que serão enviadas para atualização no banco str 79942a7a-de77-4e8f-af5b-893d973c38da - Rafael - CONVIDADO - 2024-09-19 20:29:58 - None
+[2024-09-19 20:29:58,370] INFO in update_cast_member: Atualização da membro do elenco 79942a7a-de77-4e8f-af5b-893d973c38da finalizada
+[2024-09-19 20:29:58,411] DEBUG in create_genre: instância iniciada com <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB48710> - <class 'src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository'> - <src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository object at 0x0000021ACCB480E0> - <class 'src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository'>
+[2024-09-19 20:29:58,411] INFO in create_genre: Iniciando de genero Genre 1
+[2024-09-19 20:29:58,411] DEBUG in create_genre: Argumentos CreateGenreRequest(name='Genre 1', categories_id={UUID('7e1dd8a6-da67-4f31-ba9f-fd7cd7430d56'), UUID('483ca51c-3c52-48e4-9a19-ed1b06c5766d')}, is_active=True) - <class 'src.core.genre.application.use_cases.create_genre.CreateGenreRequest'>
+[2024-09-19 20:29:58,412] DEBUG in create_genre: Dados a serem persistidos Genre(id=UUID('834d57db-8d1e-4862-b528-cb5594bce55e'), notificaiton=Notification(), name='Genre 1', is_active=True, created_date='2024-09-19 20:29:58', updated_date=None, categories={UUID('7e1dd8a6-da67-4f31-ba9f-fd7cd7430d56'), UUID('483ca51c-3c52-48e4-9a19-ed1b06c5766d')})
+[2024-09-19 20:29:58,412] INFO in create_genre: Criação do genero finalizada
+[2024-09-19 20:29:58,413] DEBUG in create_genre: instância iniciada com <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB48050> - <class 'src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository'> - <src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository object at 0x0000021ACCB48710> - <class 'src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository'>
+[2024-09-19 20:29:58,413] INFO in create_genre: Iniciando de genero Genre 1
+[2024-09-19 20:29:58,413] DEBUG in create_genre: Argumentos CreateGenreRequest(name='Genre 1', categories_id={UUID('734abb7c-ef2e-4de3-9665-53522f4f6b7b')}, is_active=True) - <class 'src.core.genre.application.use_cases.create_genre.CreateGenreRequest'>
+[2024-09-19 20:29:58,414] ERROR in create_genre: Não foi possível localizar a categoria vinculada ao genero Genre 1 - {UUID('734abb7c-ef2e-4de3-9665-53522f4f6b7b')}
+[2024-09-19 20:29:58,415] DEBUG in create_genre: instância iniciada com <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB373E0> - <class 'src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository'> - <src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository object at 0x0000021ACCB372F0> - <class 'src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository'>
+[2024-09-19 20:29:58,416] INFO in create_genre: Iniciando de genero Genre 1
+[2024-09-19 20:29:58,416] DEBUG in create_genre: Argumentos CreateGenreRequest(name='Genre 1', categories_id=set(), is_active=True) - <class 'src.core.genre.application.use_cases.create_genre.CreateGenreRequest'>
+[2024-09-19 20:29:58,416] DEBUG in create_genre: Dados a serem persistidos Genre(id=UUID('d1e49eed-69a0-4343-9a0e-c62b247bbddb'), notificaiton=Notification(), name='Genre 1', is_active=True, created_date='2024-09-19 20:29:58', updated_date=None, categories=set())
+[2024-09-19 20:29:58,416] INFO in create_genre: Criação do genero finalizada
+[2024-09-19 20:29:58,418] DEBUG in delete_genre: instância iniciada com <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB37140> - <class 'src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository'>
+[2024-09-19 20:29:58,418] INFO in delete_genre: Iniciando deleção do genero cd575e8c-1a34-4a37-9832-c064839a7cdb
+[2024-09-19 20:29:58,418] DEBUG in delete_genre: Argumentos DeleteGenreRequest(id=UUID('cd575e8c-1a34-4a37-9832-c064839a7cdb')) - <class 'src.core.genre.application.use_cases.delete_genre.DeleteGenreRequest'>
+[2024-09-19 20:29:58,418] INFO in delete_genre: Membro do elenco cd575e8c-1a34-4a37-9832-c064839a7cdb deletado
+[2024-09-19 20:29:58,425] DEBUG in list_genre: Iniciando instâcia <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB37140>
+[2024-09-19 20:29:58,426] INFO in list_genre: Iniciando listagem de generos
+[2024-09-19 20:29:58,426] DEBUG in list_genre: Argumentos RequestListGenre(order_by='name', current_page=1) - <class 'src.core.genre.application.use_cases.list_genre.RequestListGenre'>
+[2024-09-19 20:29:58,426] DEBUG in list_genre: Membros do elenco localizadas [GenreOutput(id=UUID('6e8bc113-17b2-4451-91de-ca132b43bf81'), name='Terror', is_active=True, categories_id={UUID('4cd63113-f8ba-4ef1-a418-1c18b12ac87c'), UUID('5c5777c5-0fe9-4584-b570-85ee9857f003')}, created_date='2024-09-03 07:07:07', updated_date=None)]
+[2024-09-19 20:29:58,433] DEBUG in update_genre: instância iniciada com <src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository object at 0x0000021ACCB375F0> - <class 'src.core.genre.infra.in_memory_genre_repository.InMemoryGenreRepository'> - <src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository object at 0x0000021ACCB36F30> - <class 'src.core.category.infra.in_memory_category_repository.InMemoryCategoryRepository'>
+[2024-01-02 16:19:19,000] INFO in update_genre: Iniciando update de genero 08e3d07f-8493-41fb-9e99-c9a6602f8764
+[2024-01-02 16:19:19,000] DEBUG in update_genre: Argumentos UpdateGenreRequest(id=UUID('08e3d07f-8493-41fb-9e99-c9a6602f8764'), name='Terror', categories_id={UUID('dc049a4f-ecc8-44e5-b0e6-7c3d8a1203d8'), UUID('192a1dcf-f727-42a6-b772-683059568b4a')}, is_active=False) - <class 'src.core.genre.application.use_cases.update_genre.UpdateGenreRequest'>
+[2024-01-02 16:19:19,000] DEBUG in update_genre: Informações da entidade genero que serão enviadas para atualização no banco Genre(id=UUID('08e3d07f-8493-41fb-9e99-c9a6602f8764'), notificaiton=Notification(), name='Terror', is_active=False, created_date='2024-01-01 20:20:20', updated_date='2024-01-02 19:19:19', categories={UUID('dc049a4f-ecc8-44e5-b0e6-7c3d8a1203d8'), UUID('192a1dcf-f727-42a6-b772-683059568b4a')})
+[2024-01-02 16:19:19,000] INFO in update_genre: Atualização da genero 08e3d07f-8493-41fb-9e99-c9a6602f8764 finalizada
