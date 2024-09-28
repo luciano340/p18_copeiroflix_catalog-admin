@@ -19,11 +19,11 @@ class RequestCreateVideoWithoutMedia:
     title: str
     description: str
     duration: Decimal
-    launch_at: datetime | None = None
     rating: str
     categories: set[UUID]
     genres: set[UUID]
     cast_members: set[UUID]
+    launch_at: datetime | None = None
 
 @dataclass
 class ResponseCreateVideoWithoutMedia:
@@ -44,8 +44,8 @@ class CreateVideoWithoutMedia:
         self.logger = get_logger(__name__)
         self.logger.debug(f'instância iniciada com {video_repository} - {type(video_repository)} - {category_repository} - {genre_repository} - {cast_member_repository}')
         
-    def execute(self, request: ResponseCreateVideoWithoutMedia) -> ResponseCreateVideoWithoutMedia:
-        self.logger.info(f'Iniciando criação devideo sem midia {request.name}')
+    def execute(self, request: RequestCreateVideoWithoutMedia) -> ResponseCreateVideoWithoutMedia:
+        self.logger.info(f'Iniciando criação devideo sem midia {request.title}')
         self.logger.debug(f'Argumentos {request} - {type(request)}')
         notification = Notification()
         self._validate_categories(request=request, notificaiton=notification)
@@ -72,7 +72,8 @@ class CreateVideoWithoutMedia:
             raise InvalidVideo(err)
         
         self.video_repository.save(video=video)
-
+        return ResponseCreateVideoWithoutMedia(id=video.id)
+    
     def _validate_categories(self, request: RequestCreateVideoWithoutMedia, notificaiton: Notification) -> None:
         categories_ids = {category.id for category in self.category_repository.list()}
 
