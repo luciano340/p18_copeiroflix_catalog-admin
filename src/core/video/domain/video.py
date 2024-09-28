@@ -24,7 +24,7 @@ class Video(Entity):
     cast_members: set[UUID] = field(default_factory=set)
     created_date: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
     updated_date: datetime = None
-    launch_at: datetime = field(default_factory=lambda: datetime.now().isoformat(sep=" ", timespec="seconds"))
+    launch_at: datetime = field(default_factory=lambda: datetime.now().date())
     published: bool = False
 
     def __post_init__(self):
