@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_prometheus',
     'src.django_project.apps.category',
     'src.django_project.apps.genre',
-    'src.django_project.apps.cast_member'
+    'src.django_project.apps.cast_member',
+    'src.django_project.apps.video'
 ]
 
 MIDDLEWARE = [

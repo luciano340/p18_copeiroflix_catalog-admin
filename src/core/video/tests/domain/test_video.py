@@ -26,7 +26,7 @@ class TestVideo:
         assert video.rating == "L"
         assert video.updated_date == None
         assert video.created_date == "2024-09-21 08:08:08"
-        assert video.launch_at == "2024-09-21 08:08:08"
+        assert str(video.launch_at) == "2024-09-21"
     
     def test_create_invalid_entity_without_title(self):
         with pytest.raises(ValueError, match="Title cannot be empty"):

@@ -20,12 +20,14 @@ from rest_framework.routers import DefaultRouter
 from src.django_project.apps.cast_member.views import CastMemberViewSet
 from src.django_project.apps.category.views import CategoryViewSet
 from src.django_project.apps.genre.views import GenreViewSet
+from src.django_project.apps.video.views import CreateVideoWithoutMediaViewSet
 
 
 router = DefaultRouter()
 router.register(r'api/categories', CategoryViewSet, basename="category")
 router.register(r'api/genres', GenreViewSet, basename="genre")
 router.register(r'api/cast_members', CastMemberViewSet, basename="cast_member")
+router.register(r'api/video/video_without_media', CreateVideoWithoutMediaViewSet, basename="video_without_media")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
