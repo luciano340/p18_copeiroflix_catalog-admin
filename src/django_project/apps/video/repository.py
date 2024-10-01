@@ -51,7 +51,7 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
             video_model.genres.set(video.genres)
             video_model.cast_members.set(video.cast_members)
 
-    def list(self, order_by: str = "name") -> list[Video]:
+    def list(self, order_by: str = "title") -> list[Video]:
         genre_list = [
             VideoModelMapper.to_entity(genre_model)
             for genre_model in VideoORM.objects.all().order_by(order_by)
@@ -62,7 +62,7 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
 class VideoModelMapper:
     @staticmethod
     def to_model(video: Video) -> VideoORM:
-        return VideoORM(
+        video_model = VideoORM(
                 title=video.title,
                 description=video.description,
                 duration=video.duration,
@@ -74,8 +74,16 @@ class VideoModelMapper:
                 video=video.video,
                 launch_at=video.launch_at,
                 published=video.published,
-                updated_date=video.updated_date
+                updated_date=video.updated_date,
+                created_date=video.created_date,
+
         )
+        video_model.save()
+        video_model.categories.set(video.categories)
+        video_model.genres.set(video.genres)
+        video_model.cast_members.set(video.cast_members)
+        
+        return video_model
 
     @staticmethod
     def to_entity(video_model: VideoORM) -> Video:
@@ -91,5 +99,9 @@ class VideoModelMapper:
             video=video_model.video,
             launch_at=video_model.launch_at,
             published=video_model.published,
-            updated_date=video_model.updated_date
+            updated_date=video_model.updated_date,
+            created_date=video_model.created_date,
+            categories={c.id for c in video_model.categories.all()},
+            cast_members={c.id for c in video_model.cast_members.all()},
+            genres={c.id for c in video_model.genres.all()}
         )
