@@ -76,7 +76,7 @@ class TestCreateVideoWithoutMediaAPI:
         video_repository: DjangoORMVideoRepository
     ):
 
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         with freeze_time("2024-09-30 20:20:00"):
             response = APIClient().post(url, data={
                 "title": "Filme teste",
@@ -112,7 +112,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "a"*300,
             "description": "Testando cadastro",
@@ -135,7 +135,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro"*2500,
@@ -158,7 +158,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",
@@ -181,7 +181,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",
@@ -204,7 +204,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",
@@ -227,7 +227,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",
@@ -250,7 +250,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",
@@ -273,7 +273,7 @@ class TestCreateVideoWithoutMediaAPI:
         category_repository: DjangoORMCategoryRepository,
     ):
         
-        url = "/api/video/video_without_media/"
+        url = "/api/videos/"
         response = APIClient().post(url, data={
             "title": "Filme muitho loco",
             "description": "Testando cadastro",

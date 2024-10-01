@@ -27,7 +27,7 @@ router = DefaultRouter()
 router.register(r'api/categories', CategoryViewSet, basename="category")
 router.register(r'api/genres', GenreViewSet, basename="genre")
 router.register(r'api/cast_members', CastMemberViewSet, basename="cast_member")
-router.register(r'api/video/video_without_media', CreateVideoWithoutMediaViewSet, basename="video_without_media")
+router.register(r'api/videos', CreateVideoWithoutMediaViewSet, basename="video_without_media")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
