@@ -84,13 +84,14 @@ class CreateVideoWithoutMedia:
     def _validate_genres(self, request: RequestCreateVideoWithoutMedia, notificaiton: Notification) -> None:
         genres_ids = {genre.id for genre in self.genre_repository.list()}
 
+        
         if not request.genres.issubset(genres_ids):
             self.logger.error(f'Não foi possível localizar os generos vinculada ao video {request.title} - {request.genres - genres_ids}')
-            notificaiton.add_error(f"Categories ID not found: {request.title} - {request.genres - genres_ids}")
+            notificaiton.add_error(f"Genre with ID not found: {request.title} - {request.genres - genres_ids}")
 
     def _validate_cast_members(self, request: RequestCreateVideoWithoutMedia, notificaiton: Notification) -> None:
         cast_members_ids = {cm.id for cm in self.cast_member_repository.list()}
 
         if not request.cast_members.issubset(cast_members_ids):
-            self.logger.error(f'Não foi possível localizar a categorias vinculada ao genero {request.title} - {request.cast_members - cast_members_ids}')
-            notificaiton.add_error(f"Categories ID not found: {request.cast_members - cast_members_ids}")
+            self.logger.error(f'Não foi possível localizar o membro do elenco vinculada ao genero {request.title} - {request.cast_members - cast_members_ids}')
+            notificaiton.add_error(f"CastMember with ID not found: {request.cast_members - cast_members_ids}")
