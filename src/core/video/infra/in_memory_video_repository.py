@@ -22,10 +22,10 @@ class InMemoryVideoRepository(VideoRepositoryInterface):
             if i.id == id:
                 self.videos.pop(n)
     
-    def update(self, genre: Video) -> None:
+    def update(self, video: Video) -> None:
         for n, i in enumerate(self.videos):
-            if i.id == genre.id:
-                self.videos[n] = genre
+            if i.id == video.id:
+                self.videos[n] = video
 
     def list(self, order_by: str = "name") -> list[Video]:
         return [c for c in self.videos]

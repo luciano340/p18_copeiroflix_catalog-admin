@@ -21,16 +21,13 @@ class Rating(StrEnum):
 
 @dataclass(frozen=True)
 class ImageMedia:
-    id: UUID
-    check_sum: str
-    name: str
-    location: str
-    
-@dataclass(frozen=True)
-class AudioVideoMedia:
-    id: UUID
-    check_sum: str
     name: str
     raw_location: str
-    encoded_locatiom: str
+
+
+@dataclass(frozen=True)
+class AudioVideoMedia:
+    name: str
+    raw_location: str
+    encoded_location: str
     status: MediaStatus

@@ -1,0 +1,46 @@
+from unittest.mock import create_autospec
+import uuid
+from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
+from src.core.video.application.use_cases.upload_video import RequestUploadVideo, UploadVideo
+from src.core.video.domain.value_objetcs import AudioVideoMedia, MediaStatus, Rating
+from src.core.video.domain.video import Video
+from src.core.video.infra.in_memory_video_repository import InMemoryVideoRepository
+
+
+class TesteUploadMediaVideo:
+    def test_upload_video_media(self):
+        video = Video(
+            title="Teste",
+            description="Teste 2222",
+            duration=250.5,
+            rating=Rating.L,
+            categories=set([uuid.uuid4()]),
+            genres=set([uuid.uuid4()]),
+            cast_members=set([uuid.uuid4()])
+        )
+
+        video_repository = InMemoryVideoRepository(videos=[video])
+        mock_storage = create_autospec(StorageServiceInterface)
+
+        use_case = UploadVideo(video_repository=video_repository, storage_service=mock_storage)
+        request = RequestUploadVideo(
+            video_id=video.id,
+            file_name="meuvideo.mp4",
+            content=b"asd8hjasudhasd",
+            content_type="video/mp4"
+        )
+        use_case.execute(request=request)
+
+        mock_storage.store.assert_called_once_with(
+            path=f"videos\\{video.id}\\meuvideo.mp4",
+            content=b"asd8hjasudhasd",
+            type="video/mp4"
+        )
+
+        repo_video = video_repository.get_by_id(id=video.id)
+        assert repo_video.video == AudioVideoMedia(
+            name="meuvideo.mp4",
+            raw_location=f"videos\\{video.id}\\meuvideo.mp4",
+            encoded_location="",
+            status=MediaStatus.PENDING
+        )

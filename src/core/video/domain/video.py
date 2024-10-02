@@ -61,13 +61,15 @@ class Video(Entity):
                 continue
             setattr(self, key, value)
         self.__validation()
-    
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
+        
     def add_category(self, category: UUID|list[UUID]) -> None:
         if isinstance(category, list):
             self.categories.update(category)
         else:
             self.categories.add(category)
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def add_genres(self, genre: UUID|list[UUID]) -> None:
         if isinstance(genre, list):
@@ -75,6 +77,7 @@ class Video(Entity):
         else:
             self.genres.add(genre)
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def add_cast_member(self, cast_member: UUID|list[UUID]) -> None:
         if isinstance(cast_member, list):
@@ -82,23 +85,29 @@ class Video(Entity):
         else:
             self.cast_members.add(cast_member)
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def update_banner(self, banner: ImageMedia) -> None:
         self.banner = banner
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def update_thumbnail(self, thumbnail: ImageMedia) -> None:
         self.thumbnail = thumbnail
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def update_thumbnail_half(self, thumbnail_half: ImageMedia) -> None:
         self.thumbnail_half = thumbnail_half
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def update_trailer(self, trailer: AudioVideoMedia) -> None:
         self.trailer = trailer
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
 
     def update_video(self, video: AudioVideoMedia) -> None:
         self.video = video
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
