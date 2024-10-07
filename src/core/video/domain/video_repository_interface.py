@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
+from src.core.video.domain.value_objetcs import AudioVideoMedia, ImageMedia
 from src.core.video.domain.video import Video
 
 
@@ -19,6 +20,26 @@ class VideoRepositoryInterface(ABC):
 
     @abstractmethod
     def update(self, video: Video) -> None:
+        raise NotImplementedError
+    
+    @abstractmethod
+    def update_media(self, video: Video):
+        raise NotImplementedError
+
+    @abstractmethod
+    def update_trailer(self, video: Video):
+        raise NotImplementedError
+    
+    @abstractmethod
+    def update_banner(self, video: Video):
+        raise NotImplementedError
+
+    @abstractmethod
+    def update_thumbnail(self, video: Video):
+        raise NotImplementedError
+
+    @abstractmethod
+    def update_thumbnail_half(self, id: UUID, image_media: ImageMedia):
         raise NotImplementedError
 
     @abstractmethod

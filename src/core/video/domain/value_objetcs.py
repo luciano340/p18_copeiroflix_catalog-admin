@@ -10,6 +10,17 @@ class MediaStatus(StrEnum):
     ERROR = "ERROR"
 
 @unique
+class AudioMediaType(StrEnum):
+    VIDEO = "VIDEO"
+    TRAILER = "TRAILER"
+
+@unique
+class ImageMediaType(StrEnum):
+    THUMBNAIL_HALF = "THUMBNAIL_HALF"
+    THUMBNAIL = "THUMBNAIL"
+    BANNER = "BANNER"
+
+@unique
 class Rating(StrEnum):
     ER = "ER"
     L = "L"
@@ -22,8 +33,8 @@ class Rating(StrEnum):
 @dataclass(frozen=True)
 class ImageMedia:
     name: str
-    raw_location: str
-
+    location: str
+    type: ImageMediaType
 
 @dataclass(frozen=True)
 class AudioVideoMedia:
@@ -31,3 +42,4 @@ class AudioVideoMedia:
     raw_location: str
     encoded_location: str
     status: MediaStatus
+    type: AudioMediaType

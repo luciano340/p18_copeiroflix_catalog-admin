@@ -2,7 +2,7 @@ from datetime import datetime
 import uuid
 from django.db import models
 
-from src.core.video.domain.value_objetcs import MediaStatus, Rating
+from src.core.video.domain.value_objetcs import AudioMediaType, ImageMediaType, MediaStatus, Rating
 
 class Video(models.Model):
     RATING_CHOICES = [(rating.name, rating.name) for rating in Rating]
@@ -29,23 +29,25 @@ class Video(models.Model):
         db_table = "videos"
 
 class ImageMedia(models.Model):
-    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    checksum = models.CharField(max_length=255)
-    name = models.CharField(max_length=255)
-    raw_location = models.CharField(max_length=1024)
+    IMAGE_TYPE_CHOICE = [(type.name, type.name) for type in ImageMediaType ]
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=255)
+    location = models.CharField(max_length=1024)
+    type = models.CharField(max_length=20, choices=IMAGE_TYPE_CHOICE)
+    
     class Meta:
         db_table = "videos_imagemedia"
 
 class AudioVideoMedia(models.Model):
     STATUS_CHOICE = [(status.name, status.name) for status in MediaStatus ]
+    MEDIA_TYPE_CHOICE = [(type.name, type.name) for type in AudioMediaType ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    checksum = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     raw_location = models.CharField(max_length=1024)
     encoded_location = models.CharField(max_length=1024)
     status = models.CharField(max_length=20, choices=STATUS_CHOICE)
+    type = models.CharField(max_length=20, choices=MEDIA_TYPE_CHOICE)
     
     class Meta:
         db_table = "videos_audiovideomedia"
