@@ -2,11 +2,11 @@
 from uuid import UUID
 from django.db import transaction
 
-from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, ImageMedia, ImageMediaType
+from src.core.video.domain.value_objetcs import AudioMediaType, ImageMedia, ImageMediaType
 from src.core.video.domain.video import Video
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
 from src.django_project.apps.video.exceptions import AudioMediaEmptyORM
-from src.django_project.apps.video.models import Video as VideoORM
+from src.django_project.apps.video.models import Video as VideoORM, AudioVideoMedia
 
 class DjangoORMVideoRepository(VideoRepositoryInterface):
 
@@ -20,10 +20,10 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
 
     def get_by_id(self, id: UUID) -> Video | None:
         try:
-            genre_model = VideoORM.objects.get(id=id)
-        except:
+            video_model = VideoORM.objects.get(id=id)
+        except VideoORM.DoesNotExist as err:
             return None
-        return VideoModelMapper.to_entity(genre_model)
+        return VideoModelMapper.to_entity(video_model)
 
     def delete_by_id(self,id: UUID) -> None:
         VideoORM.objects.filter(id=id).delete()
@@ -44,7 +44,6 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
                 thumbnail=video.thumbnail,
                 thumbnail_half=video.thumbnail_half,
                 trailer=video.trailer,
-                video=video.video,
                 launch_at=video.launch_at,
                 published=video.published,
                 updated_date=video.updated_date
@@ -162,20 +161,20 @@ class VideoModelMapper:
     @staticmethod
     def to_model(video: Video) -> VideoORM:
         video_model = VideoORM(
-                title=video.title,
-                description=video.description,
-                duration=video.duration,
-                rating=video.rating,
-                banner=video.banner,
-                thumbnail=video.thumbnail,
-                thumbnail_half=video.thumbnail_half,
-                trailer=video.trailer,
-                video=video.video,
-                launch_at=video.launch_at,
-                published=video.published,
-                updated_date=video.updated_date,
-                created_date=video.created_date,
-
+            id=video.id,
+            title=video.title,
+            description=video.description,
+            duration=video.duration,
+            rating=video.rating,
+            banner=video.banner,
+            thumbnail=video.thumbnail,
+            thumbnail_half=video.thumbnail_half,
+            trailer=video.trailer,
+            video=video.video,
+            launch_at=video.launch_at,
+            published=video.published,
+            updated_date=video.updated_date,
+            created_date=video.created_date,
         )
         video_model.save()
         video_model.categories.set(video.categories)
@@ -187,6 +186,7 @@ class VideoModelMapper:
     @staticmethod
     def to_entity(video_model: VideoORM) -> Video:
         return Video(
+            id=video_model.id,
             title=video_model.title,
             description=video_model.description,
             duration=video_model.duration,

@@ -4,7 +4,7 @@ from uuid import UUID
 from src._shared.logger import get_logger
 from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
 from src.core.video.application.use_cases.exceptions import VideoNotFound
-from src.core.video.domain.value_objetcs import AudioVideoMedia, MediaStatus
+from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, MediaStatus
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
 
 @dataclass
@@ -27,11 +27,11 @@ class UploadVideo:
 
     def execute(self, request: RequestUploadVideo) -> ResponseUploadVideo:
         self.logger.info(f'Iniciando upload do video {request.file_name} em {request.video_id}')
-        self.logger.debug(f'Argumentos {request} - {type(request)}' )
         video = self.video_repository.get_by_id(id=request.video_id)
         
         if video is None:
-            raise VideoNotFound("Video com id não encontrado!")
+            self.logger.error(f"Video com id {request.video_id} não encontrado!")
+            raise VideoNotFound(f"Video com id {request.video_id} não encontrado!")
     
         file_path= Path("videos")/ str(video.id) / request.file_name
         
@@ -41,13 +41,16 @@ class UploadVideo:
             type=request.content_type
         )
 
+        self.logger.debug('upload finalizado no usecase')
+
         audio_video_mnedia = AudioVideoMedia(
             name=request.file_name,
             raw_location=str(file_path),
             encoded_location="",
-            status=MediaStatus.PENDING
+            status=MediaStatus.PENDING,
+            type=AudioMediaType.VIDEO
         )
 
         video.update_video(audio_video_mnedia)
-
         self.video_repository.update(video=video)
+        self.video_repository.update_media(video=video)
