@@ -47,6 +47,10 @@ class CreateVideoWithoutMediaRequestSerializer(serializers.Serializer):
 class CreateVideoResponseSerializer(serializers.Serializer):
     id = serializers.UUIDField()
 
+class UploadMediaSerializer(serializers.Serializer):
+    video_id        = serializers.UUIDField()
+    video_file      = serializers.FileField()
+
 # class DeleteGenreRequestSerializer(serializers.Serializer):
 #     id = serializers.UUIDField()
 

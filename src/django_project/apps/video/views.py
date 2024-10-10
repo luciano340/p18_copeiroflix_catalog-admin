@@ -13,9 +13,9 @@ from src.django_project.apps.cast_member.repository import DjangoORMCastMemberRe
 from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.django_project.apps.genre.repository import DjangoORMGenreRepository
 from src.django_project.apps.video.repository import DjangoORMVideoRepository
-from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer
+from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, UploadMediaSerializer
 
-class VideoMnediaViewSet(viewsets.ViewSet):
+class VideoViewSet(viewsets.ViewSet):
     def create(self, request: Request) -> Response:
         serializer = CreateVideoWithoutMediaRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -43,10 +43,16 @@ class VideoMnediaViewSet(viewsets.ViewSet):
             data=CreateVideoResponseSerializer(instance=output).data
         )
 
+class VideoMediaViewSet(viewsets.ViewSet):
     def partial_update(self, request: Request, pk: UUID) -> Response:
-        file = request.FILES["video_file"]
-        content = file.read()
-        content_type = file.content_type
+        serializer = UploadMediaSerializer(
+            data={
+                "video_id": pk,
+                "video_file": request.FILES["video_file"],
+            },
+        )
+        serializer.is_valid(raise_exception=True)
+        
 
         upload_video = UploadVideo(
             video_repository=DjangoORMVideoRepository(),
@@ -54,10 +60,10 @@ class VideoMnediaViewSet(viewsets.ViewSet):
         )
 
         request_upload_video = RequestUploadVideo(
-            video_id=UUID(pk),
-            file_name=file.name,
-            content=content,
-            content_type=content_type
+            video_id=serializer.validated_data["video_id"],
+            file_name=serializer.validated_data["video_file"],
+            content=serializer.validated_data["video_file"].read(),
+            content_type=serializer.validated_data["video_file"].content_type
         )
 
         try:
