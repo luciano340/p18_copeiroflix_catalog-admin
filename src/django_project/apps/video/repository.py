@@ -2,11 +2,14 @@
 from uuid import UUID
 from django.db import transaction
 
+from src._shared.logger import get_logger
 from src.core.video.domain.value_objetcs import AudioMediaType, ImageMedia, ImageMediaType
 from src.core.video.domain.video import Video
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
 from src.django_project.apps.video.exceptions import AudioMediaEmptyORM
 from src.django_project.apps.video.models import Video as VideoORM, AudioVideoMedia
+
+logger = get_logger(__name__)
 
 class DjangoORMVideoRepository(VideoRepositoryInterface):
 
@@ -40,10 +43,6 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
                 description=video.description,
                 duration=video.duration,
                 rating=video.rating,
-                banner=video.banner,
-                thumbnail=video.thumbnail,
-                thumbnail_half=video.thumbnail_half,
-                trailer=video.trailer,
                 launch_at=video.launch_at,
                 published=video.published,
                 updated_date=video.updated_date
@@ -52,7 +51,7 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
             video_model.genres.set(video.genres)
             video_model.cast_members.set(video.cast_members)
     
-    def update_media(self, video: Video):
+    def update_media(self, video: Video, video_type: AudioMediaType) -> None:
         try:
             video_model = VideoORM.objects.get(id=video.id)
         except VideoORM.DoesNotExist:
@@ -61,38 +60,22 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
         if video.video is None:
             raise AudioMediaEmptyORM(f"The video of the entity {video} cannot be empty for update")
 
-        AudioVideoMedia.objects.filter(id=video_model.id, type=AudioMediaType.VIDEO).delete()
-        
-        video_model.video = AudioVideoMedia.objects.create(
+        field_name = "video" if video_type == AudioMediaType.VIDEO else "trailer"
+        media_instance = getattr(video_model, field_name, None)
+        if media_instance is not None:
+                AudioVideoMedia.objects.filter(id=media_instance.id, type=video_type).delete()
+
+        media_instance = AudioVideoMedia.objects.create(
             name=video.video.name,
             raw_location=video.video.raw_location,
             status=video.video.status,
-            type=AudioMediaType.VIDEO
+            type=video_type
         )
-
-        video_model.save()
-
-    def update_trailer(self, video: Video):
-        try:
-            video_model = VideoORM.objects.get(id=video.id)
-        except VideoORM.DoesNotExist:
-            return None
-
-        if video.video is None:
-            raise AudioMediaEmptyORM(f"The trailer of the entity {video} cannot be empty for update")
-
-        AudioVideoMedia.objects.filter(id=video_model.id, type=AudioMediaType.TRAILER).delete()
         
-        video_model.trailer = AudioVideoMedia.objects.create(
-            name=video.video.name,
-            raw_location=video.video.raw_location,
-            status=video.video.status,
-            type=AudioMediaType.TRAILER
-        )
-
+        setattr(video_model, field_name, media_instance)
         video_model.save()
 
-    def update_banner(self, video: Video):
+    def update_image(self, video: Video, image_type: ImageMediaType) -> None:
         try:
             video_model = VideoORM.objects.get(id=video.id)
         except VideoORM.DoesNotExist:
@@ -101,50 +84,12 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
         if video.video is None:
             raise AudioMediaEmptyORM(f"The banner of the entity {video} cannot be empty for update")
 
-        ImageMedia.objects.filter(id=video_model.id, type=ImageMediaType.BANNER).delete()
+        ImageMedia.objects.filter(id=video_model.id, type=image_type).delete()
         
         video_model.banner = ImageMedia.objects.create(
             name=video.banner.name,
             location=video.banner.location,
-            type=ImageMediaType.BANNER
-        )
-
-        video_model.save()
-
-    def update_thumbnail(self, video: Video):
-        try:
-            video_model = VideoORM.objects.get(id=video.id)
-        except VideoORM.DoesNotExist:
-            return None
-
-        if video.video is None:
-            raise AudioMediaEmptyORM(f"The thumbnail of the entity {video} cannot be empty for update")
-
-        ImageMedia.objects.filter(id=video_model.id, type=ImageMediaType.THUMBNAIL).delete()
-        
-        video_model.banner = ImageMedia.objects.create(
-            name=video.banner.name,
-            location=video.banner.location,
-            type=ImageMediaType.THUMBNAIL
-        )
-
-        video_model.save()
-
-    def update_thumbnail_half(self, video: Video):
-        try:
-            video_model = VideoORM.objects.get(id=video.id)
-        except VideoORM.DoesNotExist:
-            return None
-
-        if video.video is None:
-            raise AudioMediaEmptyORM(f"The thumbnail_half of the entity {video} cannot be empty for update")
-
-        ImageMedia.objects.filter(id=video_model.id, type=ImageMediaType.THUMBNAIL_HALF).delete()
-        
-        video_model.banner = ImageMedia.objects.create(
-            name=video.banner.name,
-            location=video.banner.location,
-            type=ImageMediaType.THUMBNAIL_HALF
+            type=image_type
         )
 
         video_model.save()

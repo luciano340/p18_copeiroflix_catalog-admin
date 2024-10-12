@@ -27,7 +27,8 @@ class TesteUploadMediaVideo:
             video_id=video.id,
             file_name="meuvideo.mp4",
             content=b"asd8hjasudhasd",
-            content_type="video/mp4"
+            content_type="video/mp4",
+            video_type=AudioMediaType.VIDEO
         )
         use_case.execute(request=request)
 
@@ -35,14 +36,13 @@ class TesteUploadMediaVideo:
             path=f"videos\\{video.id}\\meuvideo.mp4",
             content=b"asd8hjasudhasd",
             type="video/mp4",
-            type=AudioMediaType.VIDEO
         )
 
         repo_video = video_repository.get_by_id(id=video.id)
         assert repo_video.video == AudioVideoMedia(
             name="meuvideo.mp4",
             raw_location=f"videos\\{video.id}\\meuvideo.mp4",
-            encoded_location="",
+            encoded_location=None,
             status=MediaStatus.PENDING,
             type=AudioMediaType.VIDEO
         )

@@ -3,7 +3,7 @@ from pathlib import Path
 from uuid import UUID
 from src._shared.logger import get_logger
 from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
-from src.core.video.application.use_cases.exceptions import VideoNotFound
+from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, VideoNotFound
 from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, MediaStatus
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
 
@@ -13,6 +13,7 @@ class RequestUploadVideo:
     file_name: str
     content: bytes
     content_type: str
+    video_type: AudioMediaType
 
 @dataclass
 class ResponseUploadVideo:
@@ -47,11 +48,23 @@ class UploadVideo:
         audio_video_mnedia = AudioVideoMedia(
             name=request.file_name,
             raw_location=str(file_path),
-            encoded_location="",
+            encoded_location=None,
             status=MediaStatus.PENDING,
-            type=AudioMediaType.VIDEO
+            type=request.video_type
         )
 
-        video.update_video(audio_video_mnedia)
-        self.video_repository.update(video=video)
-        self.video_repository.update_media(video=video)
+        self.logger.debug(f"Tipo de media localizada {request.video_type}")
+        try:
+            if request.video_type == AudioMediaType.VIDEO:
+                video.update_video(audio_video_mnedia)
+            elif request.video_type == AudioMediaType.TRAILER:
+                video.update_trailer(audio_video_mnedia)
+            else:
+                raise AudioVideoMediaError(f"Tipo de media inválida {request.video_type}")
+    
+            self.logger.debug(f'Entidade atualizada {video}')
+            self.video_repository.update(video=video)
+            self.video_repository.update_media(video=video, video_type=request.video_type)
+        except Exception as err:
+            self.logger.error(f'Erro ao atualizar AudioMedia {err}')
+            raise AudioVideoMediaError(err)
