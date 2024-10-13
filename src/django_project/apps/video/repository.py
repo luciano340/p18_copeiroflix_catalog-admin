@@ -1,4 +1,5 @@
 
+from os import name
 from uuid import UUID
 from django.db import transaction
 
@@ -111,11 +112,35 @@ class VideoModelMapper:
             description=video.description,
             duration=video.duration,
             rating=video.rating,
-            banner=video.banner,
-            thumbnail=video.thumbnail,
-            thumbnail_half=video.thumbnail_half,
-            trailer=video.trailer,
-            video=video.video,
+            banner=ImageMedia(
+                name=video.banner.name,
+                location=video.banner.location,
+                type=video.banner.type
+            ),
+            thumbnail=ImageMedia(
+                name=video.thumbnail.name,
+                location=video.thumbnail.location,
+                type=video.thumbnail.type
+            ),
+            thumbnail_half=ImageMedia(
+                name=video.thumbnail_half.name,
+                location=video.thumbnail_half.location,
+                type=video.thumbnail_half.type
+            ),
+            trailer=AudioVideoMedia(
+                name=video.trailer.name,
+                raw_location=video.trailer.raw_location,
+                encoded_location=video.trailer.encoded_location,
+                status=video.trailer.status,
+                type=video.trailer.status
+            ),
+            video=AudioVideoMedia(
+                name=video.video.name,
+                raw_location=video.video.raw_location,
+                encoded_location=video.video.encoded_location,
+                status=video.video.status,
+                type=video.video.status
+            ),
             launch_at=video.launch_at,
             published=video.published,
             updated_date=video.updated_date,

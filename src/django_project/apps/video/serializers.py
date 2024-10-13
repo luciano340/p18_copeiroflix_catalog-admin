@@ -43,14 +43,29 @@ class AudioMediaTypeField(serializers.ChoiceField):
 
     def to_representation(self, value):
         return str(super().to_representation(value))
+
+class ImageMediaTypeField(serializers.ChoiceField):
+    def __init__(self, **kwargs):
+        choices = [(type.name, type.value) for type in AudioMediaType]
+        super().__init__(choices=choices, **kwargs)
+
+    def to_internal_value(self, data):
+        return AudioMediaType(super().to_internal_value(data))
+
+    def to_representation(self, value):
+        return str(super().to_representation(value))
     
 class AudioVideoMediaOutput(serializers.Serializer):
-    id  = serializers.UUIDField()
     name = serializers.CharField(max_length=255, allow_blank=False)
     raw_location = serializers.CharField(max_length=1024)
     encoded_location = serializers.CharField(max_length=1024)
     status = StatusTypeField()
     type = AudioMediaTypeField()
+
+class ImageMediaOutput(serializers.Serializer):
+    name = serializers.CharField(max_length=255, allow_blank=False)
+    location = serializers.CharField(max_length=1024)
+    type = ImageMediaTypeField()
 
 class VideoResponseSerializer(serializers.Serializer):
     id  = serializers.UUIDField()
@@ -58,10 +73,10 @@ class VideoResponseSerializer(serializers.Serializer):
     description = serializers.CharField(max_length=1024, allow_blank=False)
     duration = serializers.DecimalField(max_digits=10, decimal_places=2)
     rating = RatingTypeField()
-    banner = serializers.FileField(allow_empty_file=False)
-    thumbnail = serializers.FileField(allow_empty_file=False)
-    thumbnail_half = serializers.FileField(allow_empty_file=False)
-    trailer = serializers.FileField(allow_empty_file=False)
+    banner = ImageMediaOutput(allow_null=True)
+    thumbnail = ImageMediaOutput(allow_null=True)
+    thumbnail_half = ImageMediaOutput(allow_null=True)
+    trailer = AudioVideoMediaOutput(allow_null=True)
     video = AudioVideoMediaOutput(allow_null=True)
     categories = SetField(child=serializers.UUIDField())
     genres = SetField(child=serializers.UUIDField())
