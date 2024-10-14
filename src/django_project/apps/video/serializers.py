@@ -108,8 +108,8 @@ class UploadAudioMediaSerializer(serializers.Serializer):
     video_file      = serializers.FileField()
     video_type      = AudioMediaTypeField()
     
-# class DeleteGenreRequestSerializer(serializers.Serializer):
-#     id = serializers.UUIDField()
+class DeleteVideoRequestSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
 
 # class UpdateGenreSerializer(serializers.Serializer):
 #     id = serializers.UUIDField()

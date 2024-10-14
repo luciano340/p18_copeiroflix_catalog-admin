@@ -30,6 +30,23 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
         return VideoModelMapper.to_entity(video_model)
 
     def delete_by_id(self,id: UUID) -> None:
+        video_model = VideoORM.objects.get(id=id)
+        
+        if video_model.video is not None:
+            AudioVideoMedia.objects.filter(id=video_model.video.id).delete()
+        
+        if video_model.trailer is not None:
+            AudioVideoMedia.objects.filter(id=video_model.trailer.id).delete()
+        
+        if video_model.banner is not None:
+            ImageMedia.objects.filter(id=video_model.banner.id).delete()
+
+        if video_model.thumbnail is not None:
+            ImageMedia.objects.filter(id=video_model.thumbnail.id).delete()
+        
+        if video_model.thumbnail_half is not None:
+            ImageMedia.objects.filter(id=video_model.thumbnail_half.id).delete()
+
         VideoORM.objects.filter(id=id).delete()
 
     def update(self, video: Video) -> None:

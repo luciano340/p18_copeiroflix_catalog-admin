@@ -35,7 +35,7 @@ class UploadVideo:
             raise VideoNotFound(f"Video com id {request.video_id} não encontrado!")
 
 
-        file_path= Path("videos")/ str(video.id) / str(request.file_name)
+        file_path= Path("videos")/ str(video.id) / str(request.video_type) / str(request.file_name)
         
         self.storage_service.store(
             path=str(file_path),

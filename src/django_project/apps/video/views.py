@@ -7,6 +7,7 @@ from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_RE
 
 from src.core._shared.infra.storage.local_storage import LocalStorage
 from src.core.video.application.use_cases.create_video_without_media import CreateVideoWithoutMedia, RequestCreateVideoWithoutMedia
+from src.core.video.application.use_cases.delete_video import DeleteVideo, DeleteVideoRequest
 from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, InvalidVideo, RelatedEntitiesNotFound, VideoNotFound
 from src.core.video.application.use_cases.list_video import ListVideo, RequestListVideo
 from src.core.video.application.use_cases.upload_video import RequestUploadVideo, UploadVideo
@@ -14,7 +15,7 @@ from src.django_project.apps.cast_member.repository import DjangoORMCastMemberRe
 from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.django_project.apps.genre.repository import DjangoORMGenreRepository
 from src.django_project.apps.video.repository import DjangoORMVideoRepository
-from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, ListVideoResponseSerializer, UploadAudioMediaSerializer
+from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, DeleteVideoRequestSerializer, ListVideoResponseSerializer, UploadAudioMediaSerializer
 
 class VideoViewSet(viewsets.ViewSet):
     def create(self, request: Request) -> Response:
@@ -64,6 +65,20 @@ class VideoViewSet(viewsets.ViewSet):
             status=HTTP_200_OK,
             data=response.data
         )
+
+    def destroy(self, request: Request, pk: UUID=None) -> Response:
+        serializer = DeleteVideoRequestSerializer(data={"id": pk})
+        serializer.is_valid(raise_exception=True)
+
+        use_case = DeleteVideo(repository=DjangoORMVideoRepository())
+        request_dto = DeleteVideoRequest(id=serializer.validated_data['id'])
+
+        try:
+            output = use_case.execute(request=request_dto)
+        except VideoNotFound:
+            return Response(status=HTTP_404_NOT_FOUND)
+        
+        return Response(status=HTTP_204_NO_CONTENT)
 
 class VideoMediaViewSet(viewsets.ViewSet):
     def partial_update(self, request: Request, pk: UUID) -> Response:
