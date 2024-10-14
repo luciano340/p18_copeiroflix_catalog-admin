@@ -1,5 +1,7 @@
 from unittest.mock import create_autospec
 import uuid
+
+from freezegun import freeze_time
 from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
 from src.core.video.application.use_cases.upload_video import RequestUploadVideo, UploadVideo
 from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, MediaStatus, Rating
@@ -21,19 +23,20 @@ class TesteUploadMediaVideo:
 
         video_repository = InMemoryVideoRepository(videos=[video])
         mock_storage = create_autospec(StorageServiceInterface)
-
-        use_case = UploadVideo(video_repository=video_repository, storage_service=mock_storage)
-        request = RequestUploadVideo(
-            video_id=video.id,
-            file_name="meuvideo.mp4",
-            content=b"asd8hjasudhasd",
-            content_type="video/mp4",
-            video_type=AudioMediaType.VIDEO
-        )
-        use_case.execute(request=request)
+        
+        with freeze_time("2024-04-04 20:20:20"):
+            use_case = UploadVideo(video_repository=video_repository, storage_service=mock_storage)
+            request = RequestUploadVideo(
+                video_id=video.id,
+                file_name="meuvideo.mp4",
+                content=b"asd8hjasudhasd",
+                content_type="video/mp4",
+                video_type=AudioMediaType.VIDEO
+            )
+            use_case.execute(request=request)
 
         mock_storage.store.assert_called_once_with(
-            path=f"videos\\{video.id}\\meuvideo.mp4",
+            path=f"videos\\{video.id}\\20240404_202020_meuvideo.mp4",
             content=b"asd8hjasudhasd",
             type="video/mp4",
         )
@@ -41,7 +44,7 @@ class TesteUploadMediaVideo:
         repo_video = video_repository.get_by_id(id=video.id)
         assert repo_video.video == AudioVideoMedia(
             name="meuvideo.mp4",
-            raw_location=f"videos\\{video.id}\\meuvideo.mp4",
+            raw_location=f"videos\\{video.id}\\20240404_202020_meuvideo.mp4",
             encoded_location=None,
             status=MediaStatus.PENDING,
             type=AudioMediaType.VIDEO
