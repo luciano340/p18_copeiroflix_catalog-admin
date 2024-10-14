@@ -19,11 +19,11 @@ class Video(models.Model):
     cast_members = models.ManyToManyField('cast_member.CastMemberModel', related_name='videos')
     created_date = models.DateTimeField(default=datetime.now)
     updated_date = models.DateTimeField(default=None, null=True)
-    banner = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="banner", on_delete=models.CASCADE)
-    thumbnail = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="video_thumbnail", on_delete=models.CASCADE)
-    thumbnail_half = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="video_thumbnail_half", on_delete=models.CASCADE)
-    trailer = models.ForeignKey("AudioVideoMedia", null=True, blank=True, related_name="video_trailer", on_delete=models.CASCADE)
-    video = models.ForeignKey("AudioVideoMedia", null=True, blank=True, related_name="video_media", on_delete=models.CASCADE)
+    banner = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="banner", on_delete=models.SET_NULL)
+    thumbnail = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="video_thumbnail", on_delete=models.SET_NULL)
+    thumbnail_half = models.ForeignKey("ImageMedia", null=True, blank=True, related_name="video_thumbnail_half", on_delete=models.SET_NULL)
+    trailer = models.ForeignKey("AudioVideoMedia", null=True, blank=True, related_name="video_trailer", on_delete=models.SET_NULL)
+    video = models.ForeignKey("AudioVideoMedia", null=True, blank=True, related_name="video_media", on_delete=models.SET_NULL)
 
     class Meta:
         db_table = "videos"

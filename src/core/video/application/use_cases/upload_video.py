@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 from uuid import UUID
 from src._shared.logger import get_logger
@@ -28,30 +29,33 @@ class UploadVideo:
 
     def execute(self, request: RequestUploadVideo) -> ResponseUploadVideo:
         self.logger.info(f'Iniciando upload do video {request.file_name} em {request.video_id}')
-        video = self.video_repository.get_by_id(id=request.video_id)
-        
-        if video is None:
-            self.logger.error(f"Video com id {request.video_id} não encontrado!")
-            raise VideoNotFound(f"Video com id {request.video_id} não encontrado!")
+        try:
+            video = self.video_repository.get_by_id(id=request.video_id)
+            
+            if video is None:
+                self.logger.error(f"Video com id {request.video_id} não encontrado!")
+                raise VideoNotFound(f"Video com id {request.video_id} não encontrado!")
 
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            file_path= Path("videos")/ str(video.id) / f"{timestamp}_{request.file_name}"
+            
+            self.storage_service.store(
+                path=str(file_path),
+                content=request.content,
+                type=request.content_type
+            )
 
-        file_path= Path("videos")/ str(video.id) / str(request.video_type) / str(request.file_name)
-        
-        self.storage_service.store(
-            path=str(file_path),
-            content=request.content,
-            type=request.content_type
-        )
+            self.logger.debug('upload finalizado no usecase')
 
-        self.logger.debug('upload finalizado no usecase')
-
-        audio_video_mnedia = AudioVideoMedia(
-            name=request.file_name,
-            raw_location=str(file_path),
-            encoded_location=None,
-            status=MediaStatus.PENDING,
-            type=request.video_type
-        )
+            audio_video_mnedia = AudioVideoMedia(
+                name=request.file_name,
+                raw_location=str(file_path),
+                encoded_location=None,
+                status=MediaStatus.PENDING,
+                type=request.video_type
+            )
+        except Exception as err:
+            self.logger.error('aqui {err}')
 
         self.logger.debug(f"Tipo de media localizada {request.video_type}")
         try:

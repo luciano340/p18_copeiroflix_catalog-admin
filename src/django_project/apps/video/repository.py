@@ -47,6 +47,7 @@ class DjangoORMVideoRepository(VideoRepositoryInterface):
         if video_model.thumbnail_half is not None:
             ImageMedia.objects.filter(id=video_model.thumbnail_half.id).delete()
 
+
         VideoORM.objects.filter(id=id).delete()
 
     def update(self, video: Video) -> None:
@@ -133,31 +134,31 @@ class VideoModelMapper:
                 name=video.banner.name,
                 location=video.banner.location,
                 type=video.banner.type
-            ),
+            ) if video.banner else None,
             thumbnail=ImageMedia(
                 name=video.thumbnail.name,
                 location=video.thumbnail.location,
                 type=video.thumbnail.type
-            ),
+            ) if video.thumbnail else None,
             thumbnail_half=ImageMedia(
                 name=video.thumbnail_half.name,
                 location=video.thumbnail_half.location,
                 type=video.thumbnail_half.type
-            ),
+            ) if video.thumbnail_half else None,
             trailer=AudioVideoMedia(
                 name=video.trailer.name,
                 raw_location=video.trailer.raw_location,
                 encoded_location=video.trailer.encoded_location,
                 status=video.trailer.status,
                 type=video.trailer.status
-            ),
+            ) if video.trailer else None,
             video=AudioVideoMedia(
                 name=video.video.name,
                 raw_location=video.video.raw_location,
                 encoded_location=video.video.encoded_location,
                 status=video.video.status,
                 type=video.video.status
-            ),
+            ) if video.video else None,
             launch_at=video.launch_at,
             published=video.published,
             updated_date=video.updated_date,
