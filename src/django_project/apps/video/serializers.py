@@ -1,7 +1,7 @@
 from email.policy import default
 from rest_framework import serializers
 
-from src.core.video.domain.value_objetcs import AudioMediaType, MediaStatus, Rating
+from src.core.video.domain.value_objetcs import AudioMediaType, ImageMediaType, MediaStatus, Rating
 from src.django_project.apps._shared.serializers import ListOutputMetaSerializer
 
 class SetField(serializers.ListField):
@@ -46,11 +46,11 @@ class AudioMediaTypeField(serializers.ChoiceField):
 
 class ImageMediaTypeField(serializers.ChoiceField):
     def __init__(self, **kwargs):
-        choices = [(type.name, type.value) for type in AudioMediaType]
+        choices = [(type.name, type.value) for type in ImageMediaType]
         super().__init__(choices=choices, **kwargs)
 
     def to_internal_value(self, data):
-        return AudioMediaType(super().to_internal_value(data))
+        return ImageMediaType(super().to_internal_value(data))
 
     def to_representation(self, value):
         return str(super().to_representation(value))
@@ -107,6 +107,11 @@ class UploadAudioMediaSerializer(serializers.Serializer):
     video_id        = serializers.UUIDField()
     video_file      = serializers.FileField()
     video_type      = AudioMediaTypeField()
+
+class UploadImageSerializer(serializers.Serializer):
+    video_id        = serializers.UUIDField()
+    image_file      = serializers.FileField()
+    image_type      = ImageMediaTypeField()
     
 class DeleteVideoRequestSerializer(serializers.Serializer):
     id = serializers.UUIDField()

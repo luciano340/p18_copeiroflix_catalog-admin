@@ -10,12 +10,13 @@ from src.core.video.application.use_cases.create_video_without_media import Crea
 from src.core.video.application.use_cases.delete_video import DeleteVideo, DeleteVideoRequest
 from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, InvalidVideo, RelatedEntitiesNotFound, VideoNotFound
 from src.core.video.application.use_cases.list_video import ListVideo, RequestListVideo
+from src.core.video.application.use_cases.upload_image import RequestUploadImage, UploadImage
 from src.core.video.application.use_cases.upload_video import RequestUploadVideo, UploadVideo
 from src.django_project.apps.cast_member.repository import DjangoORMCastMemberRepository
 from src.django_project.apps.category.repository import DjangoORMCategoryRepository
 from src.django_project.apps.genre.repository import DjangoORMGenreRepository
 from src.django_project.apps.video.repository import DjangoORMVideoRepository
-from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, DeleteVideoRequestSerializer, ListVideoResponseSerializer, UploadAudioMediaSerializer
+from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, DeleteVideoRequestSerializer, ListVideoResponseSerializer, UploadAudioMediaSerializer, UploadImageSerializer
 
 class VideoViewSet(viewsets.ViewSet):
     def create(self, request: Request) -> Response:
@@ -106,6 +107,43 @@ class VideoMediaViewSet(viewsets.ViewSet):
 
         try:
             upload_video.execute(request=request_upload_video)
+        except VideoNotFound as err:
+            return Response(status=HTTP_404_NOT_FOUND, data={"error": str(err)})
+        except AudioVideoMediaError as err:
+            return Response(
+                status=HTTP_500_INTERNAL_SERVER_ERROR,
+                data={
+                    "error": str(err)
+                }
+            )
+        return Response(status=200)
+    
+class VideoImageViewSet(viewsets.ViewSet):
+    def partial_update(self, request: Request, pk: UUID) -> Response:
+        serializer = UploadImageSerializer(
+            data={
+                "video_id": pk,
+                "image_file": request.FILES["image_file"],
+                "image_type": request.data.get("image_type")
+            },
+        )
+        serializer.is_valid(raise_exception=True)
+
+        upload_image = UploadImage(
+            video_repository=DjangoORMVideoRepository(),
+            storage_service=LocalStorage()
+        )
+
+        request_upload_video = RequestUploadImage(
+            video_id=serializer.validated_data["video_id"],
+            file_name=serializer.validated_data["image_file"],
+            content=serializer.validated_data["image_file"].read(),
+            content_type=serializer.validated_data["image_file"].content_type,
+            image_type=serializer.validated_data['image_type']
+        )
+
+        try:
+            upload_image.execute(request=request_upload_video)
         except VideoNotFound as err:
             return Response(status=HTTP_404_NOT_FOUND, data={"error": str(err)})
         except AudioVideoMediaError as err:
