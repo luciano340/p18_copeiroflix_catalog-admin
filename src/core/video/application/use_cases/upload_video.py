@@ -37,7 +37,7 @@ class UploadVideo:
                 raise VideoNotFound(f"Video com id {request.video_id} não encontrado!")
 
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-            file_path= Path("videos")/ str(video.id) / f"{timestamp}_{request.file_name}"
+            file_path= Path("videos")/ str(video.id) / str(request.video_type) / f"{timestamp}_{request.file_name}"
             
             self.storage_service.store(
                 path=str(file_path),
