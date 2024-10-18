@@ -1,8 +1,10 @@
+import os
 import uuid
 from unittest.mock import create_autospec
 
 from freezegun import freeze_time
 
+from src.core._shared.dto import ListOuputMeta
 from src.core.genre.application.use_cases.list_genre import ListGenre, GenreOutput, RequestListGenre, ResponseListGenre
 from src.core.genre.domain.genre import Genre
 from src.core.genre.domain.genre_repository_interface import GenreRepositoryInterface
@@ -46,7 +48,12 @@ class TestListGenre:
                     created_date="2024-09-04 07:07:07",
                     updated_date=None
                 ),
-            ]
+            ],
+            meta=ListOuputMeta(
+                current_page=1,
+                page_size=os.environ.get("page_size", 5),
+                total=2
+            )
         )
 
     def test_when_no_genres_exist_then_return_empty_data(self):
@@ -56,4 +63,4 @@ class TestListGenre:
         use_case = ListGenre(repository=genre_repository)
         output = use_case.execute(RequestListGenre())
 
-        assert output == ResponseListGenre(data=[])
+        assert output == ResponseListGenre(data=[], meta=ListOuputMeta(current_page=1, page_size=os.environ.get("page_size", 5), total=0))

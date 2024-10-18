@@ -71,6 +71,7 @@ class CreateVideoWithoutMedia:
             self.logger.error(f'Entidade Video invalida {err}')
             raise InvalidVideo(err)
         
+        self.logger.debug(f'Entidade a ser persistida no banco de dados {video}')
         self.video_repository.save(video=video)
         return ResponseCreateVideoWithoutMedia(id=video.id)
     

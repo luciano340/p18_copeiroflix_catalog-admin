@@ -1,0 +1,2 @@
+class AudioMediaEmptyORM(Exception):
+    pass
