@@ -3,7 +3,9 @@ from datetime import datetime
 from pathlib import Path
 from uuid import UUID
 from src._shared.logger import get_logger
-from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
+from src.core._shared.events.abstract_message_bus import AbstractMessageBus
+from src.core._shared.infrrastrructure.storage_service_interface import StorageServiceInterface
+from src.core.video.application.use_cases.events.integration_events import AudioVideoMediaUpdatedIntegrationEvent
 from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, VideoNotFound
 from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, MediaStatus
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
@@ -21,11 +23,12 @@ class ResponseUploadVideo:
     pass
 
 class UploadVideo:
-    def __init__(self, video_repository: VideoRepositoryInterface, storage_service: StorageServiceInterface):
+    def __init__(self, video_repository: VideoRepositoryInterface, storage_service: StorageServiceInterface, message_bus: AbstractMessageBus):
         self.video_repository = video_repository
         self.storage_service = storage_service
         self.logger = get_logger(__name__)
         self.logger.debug(f'instância iniciada com {video_repository} - {type(video_repository)}')
+        self.message_bus = message_bus
 
     def execute(self, request: RequestUploadVideo) -> ResponseUploadVideo:
         self.logger.info(f'Iniciando upload do video {request.file_name} em {request.video_id}')
@@ -69,6 +72,13 @@ class UploadVideo:
             self.logger.debug(f'Entidade atualizada {video}')
             self.video_repository.update(video=video)
             self.video_repository.update_media(video=video, video_type=request.video_type)
+            self.message_bus.handle([
+                AudioVideoMediaUpdatedIntegrationEvent(
+                    resource_id=video.id,
+                    file_path=str(file_path),
+                    type=request.video_type
+                )
+            ])
         except Exception as err:
             self.logger.error(f'Erro ao atualizar AudioMedia {err}')
             raise AudioVideoMediaError(err)

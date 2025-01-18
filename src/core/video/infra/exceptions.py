@@ -1,0 +1,2 @@
+class RabbitMQConumserMessageError(Exception):
+    pass

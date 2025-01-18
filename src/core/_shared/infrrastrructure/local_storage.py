@@ -1,6 +1,6 @@
 from pathlib import Path
 from src._shared.logger import get_logger
-from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
+from src.core._shared.infrrastrructure.storage_service_interface import StorageServiceInterface
 
 
 class LocalStorage(StorageServiceInterface):

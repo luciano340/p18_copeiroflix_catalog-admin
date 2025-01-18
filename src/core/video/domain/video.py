@@ -5,7 +5,8 @@ from uuid import UUID
 
 
 from src.core._shared.entity import Entity
-from src.core.video.domain.value_objetcs import AudioVideoMedia, ImageMedia, Rating
+from src.core.video.domain.events.events import AudioVideoMediaUpdated
+from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, ImageMedia, MediaStatus, Rating
 
 
 @dataclass
@@ -106,8 +107,39 @@ class Video(Entity):
         self.trailer = trailer
         self.__validation()
         self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
+        self.dispatch(AudioVideoMediaUpdated(
+            aggregate_id=self.id,
+            file_path=trailer.raw_location,
+            media_type=AudioMediaType.TRAILER
+        ))
 
     def update_video(self, video: AudioVideoMedia) -> None:
         self.video = video
         self.__validation()
+        self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")
+        self.dispatch(AudioVideoMediaUpdated(
+            aggregate_id=self.id,
+            file_path=video.raw_location,
+            media_type=AudioMediaType.VIDEO
+        ))
+    
+    def process(self, status: MediaStatus, encoded_location: str, media_type: AudioMediaType):        
+        if status == MediaStatus.COMPLETED:
+             new_media = AudioVideoMedia(
+                 name=self.video.name,
+                 raw_location=self.video.raw_location,
+                 media_type=media_type,
+                 encoded_location=encoded_location,
+                 status=MediaStatus.COMPLETED
+             )
+        else:
+             new_media = AudioVideoMedia(
+                 name=self.video.name,
+                 raw_location=self.video.raw_location,
+                 media_type=media_type,
+                 encoded_location="",
+                 status=MediaStatus.ERROR
+             )
+
+        setattr(self, media_type.value.lower(), new_media)
         self.updated_date = datetime.now().isoformat(sep=" ", timespec="seconds")

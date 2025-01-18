@@ -3,6 +3,8 @@ import uuid
 
 from freezegun import freeze_time
 import pytest
+from src.core.video.domain.events.events import AudioVideoMediaUpdated
+from src.core.video.domain.value_objetcs import AudioMediaType, AudioVideoMedia, MediaStatus
 from src.core.video.domain.video import Video
 
 
@@ -125,3 +127,33 @@ class TestVideo:
         cm_list = [uuid.uuid4(), uuid.uuid4(), uuid.uuid4()]
         video.add_cast_member(cast_member=cm_list)
         assert len(video.cast_members) == 5
+
+    def test_update_video_media_anbd_dispatch_event(self):
+        video = Video(
+            title="Filme",
+            description="É um filme",
+            duration=200,
+            published=False,
+            rating="L",
+            categories=set([uuid.uuid4()]),
+            genres=set([uuid.uuid4()]),
+            cast_members=set([uuid.uuid4()])
+        )
+
+        media = AudioVideoMedia(
+            name=f"{video.title}.mp4",
+            raw_location="raw_path",
+            encoded_location="encoded_path",
+            status=MediaStatus.COMPLETED,
+            type=AudioMediaType.VIDEO
+        )
+        video.update_video(video=media)
+        
+        assert video.video == media
+        assert video.events == [
+            AudioVideoMediaUpdated(
+                aggregate_id=video.id,
+                file_path=media.raw_location,
+                media_type=media.type
+            )
+        ]
