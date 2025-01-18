@@ -12,3 +12,6 @@ class VideoOrderNotFound(Exception):
 
 class AudioVideoMediaError(Exception):
     pass
+
+class MediaNotFound(Exception):
+    pass

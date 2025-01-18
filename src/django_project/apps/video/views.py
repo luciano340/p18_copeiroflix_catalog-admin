@@ -5,7 +5,8 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_404_NOT_FOUND, HTTP_204_NO_CONTENT, HTTP_500_INTERNAL_SERVER_ERROR
 
-from src.core._shared.infra.storage.local_storage import LocalStorage
+from src.core._shared.events.message_bus import MessageBus
+from src.core._shared.infrrastrructure.local_storage import LocalStorage
 from src.core.video.application.use_cases.create_video_without_media import CreateVideoWithoutMedia, RequestCreateVideoWithoutMedia
 from src.core.video.application.use_cases.delete_video import DeleteVideo, DeleteVideoRequest
 from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, InvalidVideo, RelatedEntitiesNotFound, VideoNotFound
@@ -94,7 +95,8 @@ class VideoMediaViewSet(viewsets.ViewSet):
 
         upload_video = UploadVideo(
             video_repository=DjangoORMVideoRepository(),
-            storage_service=LocalStorage()
+            storage_service=LocalStorage(),
+            message_bus=MessageBus()
         )
 
         request_upload_video = RequestUploadVideo(

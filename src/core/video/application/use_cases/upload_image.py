@@ -5,7 +5,7 @@ from pathlib import Path
 from uuid import UUID
 
 from src._shared.logger import get_logger
-from src.core._shared.infra.storage.storage_service_interface import StorageServiceInterface
+from src.core._shared.infrrastrructure.storage_service_interface import StorageServiceInterface
 from src.core.video.application.use_cases.exceptions import AudioVideoMediaError, VideoNotFound
 from src.core.video.domain.value_objetcs import ImageMedia, ImageMediaType
 from src.core.video.domain.video_repository_interface import VideoRepositoryInterface
@@ -73,7 +73,7 @@ class UploadImage:
                 self.logger.error('aqui 1 {err}')
             
             try:
-                    self.video_repository.update_image(video=video, image_type=request.image_type)
+                self.video_repository.update_image(video=video, image_type=request.image_type)
             except Exception as err:
                 self.logger.error(f"ue {err}")
         except Exception as err:
