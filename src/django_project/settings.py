@@ -47,6 +47,12 @@ INSTALLED_APPS = [
     'src.django_project.apps.video'
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'src.django_project.permissons.IsAuthenticated',
+    ]
+}
+
 MIDDLEWARE = [
     'django_prometheus.middleware.PrometheusBeforeMiddleware',
     'django.middleware.security.SecurityMiddleware',
