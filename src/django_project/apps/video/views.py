@@ -1,5 +1,4 @@
 from uuid import UUID
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -18,8 +17,10 @@ from src.django_project.apps.category.repository import DjangoORMCategoryReposit
 from src.django_project.apps.genre.repository import DjangoORMGenreRepository
 from src.django_project.apps.video.repository import DjangoORMVideoRepository
 from src.django_project.apps.video.serializers import CreateVideoResponseSerializer, CreateVideoWithoutMediaRequestSerializer, DeleteVideoRequestSerializer, ListVideoResponseSerializer, UploadAudioMediaSerializer, UploadImageSerializer
+from src.django_project.permissons import IsAdmin, IsAuthenticated
 
 class VideoViewSet(viewsets.ViewSet):
+    #permission_classes = [IsAuthenticated]
     def create(self, request: Request) -> Response:
         serializer = CreateVideoWithoutMediaRequestSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

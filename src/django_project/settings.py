@@ -91,6 +91,11 @@ if any("pytest" in arg for arg in sys.argv):
         }
     }
 else:
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': [
+            'src.django_project.permissons.IsAuthenticated',
+        ]
+    }
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
